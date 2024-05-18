@@ -19,3 +19,10 @@ $ bash scripts/create_superuser.bash
 ```bash
 TBD
 ```
+
+## Run the dev server
+
+```bash
+$ python manage.py runserver $PORT_NUMBER
+```
+where `$PORT_NUMBER` is optional and the default is `8000`.
