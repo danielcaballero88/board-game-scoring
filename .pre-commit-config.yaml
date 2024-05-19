@@ -30,3 +30,8 @@ repos:
         entry: djhtml --tabwidth 2
       - id: djcss
       - id: djjs
+  - repo: https://github.com/djlint/djLint
+    rev: v1.34.1
+    hooks:
+      - id: djlint-reformat-django
+      - id: djlint-django
