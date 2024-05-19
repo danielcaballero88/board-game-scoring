@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% load static %}
-  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
-  <title>
-    {% block title %}BGS App{% endblock title %}
-  </title>
-  {% load django_bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  {% bootstrap_messages %}
-</head>
-<body>
-  {% block content %}{% endblock content %}
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <title>
+      {% block title %}BGS App{% endblock title %}
+    </title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+  </head>
+  <body>
+    {% block content %}{% endblock content %}
+  </body>
 </html>
