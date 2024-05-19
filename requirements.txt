@@ -1,1 +1,2 @@
 Django>=5.0.6,<6.00
+django-bootstrap5>=24.2,<25
