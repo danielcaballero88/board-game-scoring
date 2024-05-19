@@ -26,3 +26,17 @@ TBD
 $ python manage.py runserver $PORT_NUMBER
 ```
 where `$PORT_NUMBER` is optional and the default is `8000`.
+
+
+## Linters and formatters (and pre-commit hooks)
+
+For the python code the linters in use are:
+- `flake8` with configuration given in `setup.cfg`
+- `pylint` with configuration given in `.pylintrc`
+and the formatters are:
+- `black` with default settings
+- `isort` with configuration compatible with `black` (set in `setup.cfg`)
+
+For the templates (html files) the linter is `djlint` and formatter `djhtml`.
+
+Pre commit hooks in place using python's `pre-commit` package, check configuration in `.pre-commit-config.yaml`.
