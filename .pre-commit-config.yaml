@@ -34,4 +34,5 @@ repos:
     rev: v1.34.1
     hooks:
       - id: djlint-reformat-django
+        args: [--indent, '2']
       - id: djlint-django
