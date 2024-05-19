@@ -25,7 +25,11 @@ SECRET_KEY = "django-insecure-jaleiv!41dynh=qr^8%cg#ue05^b740^lx1alzjtsliioto#^$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Set the allowed hosts/domains that Django can serve to ANYTHING.
+# ref: https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts
+# TODO: Check what values to set for security before deploying to any
+# environment other than development.
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_bootstrap5",
     "auth.apps.AuthConfig",
 ]
 
@@ -55,7 +60,7 @@ ROOT_URLCONF = "bgs.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
