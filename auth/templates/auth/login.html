@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% comment %} {% load debug_filter %} {% endcomment %}
 
+{% comment %} {% load debug_filter %} {% endcomment %}
 {% block content %}
   {% comment %} Show form as rendered by default {% endcomment %}
   {% comment %} <div class="container">
@@ -35,7 +35,11 @@
               {% csrf_token %}
               <div class="mb-3">
                 <label for="{{ form.email.id_for_label }}">Email address</label>
-                <input type="email" class="form-control" name={{ form.email.name }} id="{{ form.email.auto_id }}" placeholder="Enter email">
+                <input type="email"
+                       class="form-control"
+                       name="{{ form.email.name }}"
+                       id="{{ form.email.auto_id }}"
+                       placeholder="Enter email" />
               </div>
               <div class="mb-3">
                 <label for="{{ form.password.id_for_label }}">Password</label>
@@ -43,13 +47,13 @@
                        class="form-control"
                        name="{{ form.password.name }}"
                        id="{{ form.password.auto_id }}"
-                       placeholder="Password">
+                       placeholder="Password" />
               </div>
               <div class="mb-3 form-check">
                 <input type="checkbox"
                        class="form-check-input"
                        name="{{ form.remember_me.name }}"
-                       id="{{ form.remember_me.auto_id }}">
+                       id="{{ form.remember_me.auto_id }}" />
                 <label class="form-check-label" for="{{ form.remember_me.id_for_label }}">Remember me</label>
               </div>
               <button type="submit" class="btn btn-primary btn-block">Login</button>
