@@ -34,5 +34,5 @@ repos:
     rev: v1.34.1
     hooks:
       - id: djlint-reformat-django
-        args: [--indent, '2']
+        args: [--configuration, "pyproject.toml"]
       - id: djlint-django

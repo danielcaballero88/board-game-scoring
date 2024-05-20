@@ -1,3 +1,12 @@
 {
-  "emmet.includeLanguages": {"django-html": "html"}
+  "emmet.includeLanguages": {"django-html": "html"},
+  "[html]": {
+    "editor.suggest.insertMode": "replace",
+    "gitlens.codeLens.scopes": ["document"],
+    "editor.defaultFormatter": "monosans.djlint",
+    "editor.rulers": [120]
+  },
+  "djlint.configuration": "pyproject.toml",
+  "djlint.enableLinting": true,
+  "files.associations": {"*.html": "html"}
 }
