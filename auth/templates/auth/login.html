@@ -1,43 +1,67 @@
 {% extends "base.html" %}
+{% comment %} {% load debug_filter %} {% endcomment %}
+
 {% block content %}
-  <form action="{% url "auth:login" %}" method="post" class="form">
-    {% csrf_token %}
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
-          <div class="card mt-5">
-            <div class="card-header text-center">
-              <h3>Login</h3>
-            </div>
-            <div class="card-body">
-              <form>
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email"
-                         class="form-control"
-                         id="email"
-                         placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password"
-                         class="form-control"
-                         id="password"
-                         placeholder="Password">
-                </div>
-                <div class="form-group form-check">
-                  <input type="checkbox" class="form-check-input" id="rememberMe">
-                  <label class="form-check-label" for="rememberMe">Remember me</label>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
-              </form>
-            </div>
-            <div class="card-footer text-center">
-              <small class="text-muted">Forgot your password? <a href="#">Reset it here</a></small>
-            </div>
+  {% comment %} Show form as rendered by default {% endcomment %}
+  {% comment %} <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
+        <div class="card mt-5">
+          <div class="card-header text-center">
+            <h3>Login</h3>
+          </div>
+          <div class="card-body">
+            {{ form | debug_filter }}
+          </div>
+          <div class="card-footer text-center">
+            <small class="text-muted">
+              Forgot your password? <a href="#">Reset it here</a>
+            </small>
           </div>
         </div>
       </div>
     </div>
-  </form>
+  </div> {% endcomment %}
+  {% comment %} Show form manually rendered {% endcomment %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
+        <div class="card mt-5">
+          <div class="card-header text-center">
+            <h3>Login</h3>
+          </div>
+          <div class="card-body">
+            <form action="{% url "auth:login" %}" method="post" class="form">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="{{ form.email.id_for_label }}">Email address</label>
+                <input type="email" class="form-control" name={{ form.email.name }} id="{{ form.email.auto_id }}" placeholder="Enter email">
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                <input type="password"
+                       class="form-control"
+                       name="{{ form.password.name }}"
+                       id="{{ form.password.auto_id }}"
+                       placeholder="Password">
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       name="{{ form.remember_me.name }}"
+                       id="{{ form.remember_me.auto_id }}">
+                <label class="form-check-label" for="{{ form.remember_me.id_for_label }}">Remember me</label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+          </div>
+          <div class="card-footer text-center">
+            <small class="text-muted">
+              Forgot your password? <a href="#">Reset it here</a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
