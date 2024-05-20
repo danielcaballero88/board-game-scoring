@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A boardgame scoring app.">
-    <meta name="keywords" content="boardgame">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A boardgame scoring app." />
+    <meta name="keywords" content="boardgame" />
     {% load static %}
+
     <link rel="shortcut icon"
           type="image/png"
           href="{% static 'favicon.png' %}" />
@@ -15,6 +16,7 @@
       {% endblock title %}
     </title>
     {% load django_bootstrap5 %}
+
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% bootstrap_messages %}
