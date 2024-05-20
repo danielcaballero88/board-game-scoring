@@ -6,7 +6,15 @@
     "editor.defaultFormatter": "monosans.djlint",
     "editor.rulers": [120]
   },
+  "[django-html]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+    },
+    "djlint.enableLinting": true,
+    "editor.rulers": [120],
+    "editor.defaultFormatter": "monosans.djlint",
+  },
   "djlint.configuration": "pyproject.toml",
-  "djlint.enableLinting": true,
-  "files.associations": {"*.html": "html"}
 }
