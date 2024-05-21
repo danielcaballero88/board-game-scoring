@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
-{% load debug_filter %}
-
+{% comment %} {% load debug_filter %} {% endcomment %}
 {% block content %}
   {% comment %} Show form as rendered by default {% endcomment %}
   {% comment %} <div class="container">
@@ -12,7 +11,7 @@
             <h3>Login</h3>
           </div>
           <div class="card-body">
-            {{ form }}
+            {{ form | debug_filter }}
           </div>
           <div class="card-footer text-center">
             <small class="text-muted">
@@ -32,32 +31,23 @@
             <h3>Login</h3>
           </div>
           <div class="card-body">
-            <form action="{% url "auth:login" %}"
-                  method="post"
-                  class="needs-validation"
-                  novalidate>
+            <form action="{% url "auth:login" %}" method="post" class="form">
               {% csrf_token %}
               <div class="mb-3">
-                <label for="{{ form.email.id_for_label }}" class="form-label">Email address</label>
+                <label for="{{ form.email.id_for_label }}">Email address</label>
                 <input type="email"
                        class="form-control"
                        name="{{ form.email.name }}"
                        id="{{ form.email.auto_id }}"
-                       placeholder="Enter email"
-                       value="{{ form.email.value | default_if_none:"" }}"
-                       required />
-                <div class="invalid-feedback">Please enter a valid email address.</div>
+                       placeholder="Enter email" />
               </div>
               <div class="mb-3">
-                <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                <label for="{{ form.password.id_for_label }}">Password</label>
                 <input type="password"
                        class="form-control"
                        name="{{ form.password.name }}"
                        id="{{ form.password.auto_id }}"
-                       placeholder="Password"
-                       value="{{ form.password.value | default_if_none:"" }}"
-                       required />
-                <div class="invalid-feedback">Password is required.</div>
+                       placeholder="Password" />
               </div>
               <div class="mb-3 form-check">
                 <input type="checkbox"
@@ -78,25 +68,4 @@
       </div>
     </div>
   </div>
-  <script>
-    // Disable form submissions if there are invalid fields
-    (() => {
-      'use strict'
-
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation')
-
-      // Loop over them and prevent submission
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-
-          form.classList.add('was-validated')
-        }, false)
-      })
-    })()
-  </script>
 {% endblock content %}
