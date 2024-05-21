@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 
-{% comment %} {% load debug_filter %} {% endcomment %}
+{% load debug_filter %}
+
 {% block content %}
   {% comment %} Show form as rendered by default {% endcomment %}
-  {% comment %} <div class="container">
+  <!-- <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
         <div class="card mt-5">
           <div class="card-header text-center">
-            <h3>Login</h3>
+            <h3>
+              Login
+            </h3>
           </div>
           <div class="card-body">
-            {{ form | debug_filter }}
+            {{ form }}
           </div>
           <div class="card-footer text-center">
             <small class="text-muted">
@@ -21,42 +24,68 @@
         </div>
       </div>
     </div>
-  </div> {% endcomment %}
+  </div> -->
   {% comment %} Show form manually rendered {% endcomment %}
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
         <div class="card mt-5">
           <div class="card-header text-center">
-            <h3>Login</h3>
+            <h3>
+              Login
+            </h3>
           </div>
           <div class="card-body">
-            <form action="{% url "auth:login" %}" method="post" class="form">
+            <form action="{% url "auth:login" %}"
+                  method="post"
+                  class="needs-validation {{ was_validated }}"
+                  novalidate>
+              {% comment %}`novalidate`: server side validatoin only (for now){% endcomment %}
               {% csrf_token %}
               <div class="mb-3">
-                <label for="{{ form.email.id_for_label }}">Email address</label>
+                <label for="{{ form.email.id_for_label }}">
+                  Email address
+                </label>
                 <input type="email"
+                       id="{{ form.email.auto_id }}"
                        class="form-control"
                        name="{{ form.email.name }}"
-                       id="{{ form.email.auto_id }}"
+                       value="{{ form.email.value | default_if_none:"" }}"
                        placeholder="Enter email" />
+                {% for error in form.email.errors %}
+                  <div class="email-feedback invalid-feedback">
+                    {{ error }}
+                  </div>
+                {% endfor %}
               </div>
               <div class="mb-3">
-                <label for="{{ form.password.id_for_label }}">Password</label>
+                <label for="{{ form.password.id_for_label }}">
+                  Password
+                </label>
                 <input type="password"
+                       id="{{ form.password.auto_id }}"
                        class="form-control"
                        name="{{ form.password.name }}"
-                       id="{{ form.password.auto_id }}"
+                       value="{{ form.password.value | default_if_none:"" }}"
                        placeholder="Password" />
+                {% for error in form.password.errors %}
+                  <div class="password-feedback invalid-feedback">
+                    {{ error }}
+                  </div>
+                {% endfor %}
               </div>
               <div class="mb-3 form-check">
                 <input type="checkbox"
                        class="form-check-input"
                        name="{{ form.remember_me.name }}"
                        id="{{ form.remember_me.auto_id }}" />
-                <label class="form-check-label" for="{{ form.remember_me.id_for_label }}">Remember me</label>
+                <label class="form-check-label" for="{{ form.remember_me.id_for_label }}">
+                  Remember me
+                </label>
               </div>
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <button type="submit" class="btn btn-primary btn-block">
+                Login
+              </button>
             </form>
           </div>
           <div class="card-footer text-center">
@@ -68,4 +97,16 @@
       </div>
     </div>
   </div>
+  <script>
+    // If the form was validated, show the feedback for the errors.
+    document.addEventListener('DOMContentLoaded', function() {
+      const names = ["{{ form.email.name }}", "{{ form.password.name }}"];
+      names.forEach((name) => {
+        const el = document.querySelector(`.${name}-feedback`);
+        if (el && "{{ was_validated }}" === "was_validated") {
+          el.classList.add('d-block');
+        }
+      })
+    });
+  </script>
 {% endblock content %}
