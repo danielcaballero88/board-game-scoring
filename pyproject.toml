@@ -15,3 +15,6 @@ include = "H017,H035"
 indent = 2
 max_line_length = 120
 profile = "django"
+
+[tool.djlint.js]
+indent_size=2
