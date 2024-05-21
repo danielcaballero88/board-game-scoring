@@ -10,4 +10,4 @@ class LoginForm(forms.Form):
         label="Password",
         max_length=50,
     )
-    remember_me = forms.BooleanField()
+    remember_me = forms.BooleanField(required=False)
