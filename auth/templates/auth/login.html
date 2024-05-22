@@ -2,34 +2,11 @@
 
 {% load debug_filter %}
 
-{% block content %}
-  {% comment %} Show form as rendered by default {% endcomment %}
-  <!-- <div class="container">
+{% block content_base %}
+  <div class="container vh-100 overflow-hidden d-flex flex-column justify-content-center">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
-        <div class="card mt-5">
-          <div class="card-header text-center">
-            <h3>
-              Login
-            </h3>
-          </div>
-          <div class="card-body">
-            {{ form }}
-          </div>
-          <div class="card-footer text-center">
-            <small class="text-muted">
-              Forgot your password? <a href="#">Reset it here</a>
-            </small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  {% comment %} Show form manually rendered {% endcomment %}
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-12 col-lg-8 col-xl-6">
-        <div class="card mt-5">
+        <div class="card mb-5">
           <div class="card-header text-center">
             <h3>
               Login
@@ -109,4 +86,4 @@
       })
     });
   </script>
-{% endblock content %}
+{% endblock content_base %}
