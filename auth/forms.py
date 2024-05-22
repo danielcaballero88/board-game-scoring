@@ -1,5 +1,7 @@
 from django import forms
 
+from .utils import get_user_by_email
+
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
@@ -20,23 +22,12 @@ class LoginForm(forms.Form):
 
     # def clean(self):
     #     cleaned_data = super().clean()
-    #     print('---\ncleaned_data')
-    #     print(cleaned_data)
+    #     if self.errors:
+    #         return cleaned_data
 
-    #     print('---\nfields')
-    #     for field_name, field in self.fields.items():
-    #         print(field_name)
-    #         print(field)
-    #         print(type(field))
-    #         print(dir(field))
+    #     email = cleaned_data["email"]
+    #     user = get_user_by_email(email)
+    #     if not user:
+    #         self.add_error(None, "Wrong credentials.")
 
-    #     print('---\nerrors')
-    #     print(type(self.errors))
-    #     print(self.errors)
-    #     for k, v in self.errors.items():
-    #         print(k)
-    #         print(v)
-
-    #     print('---\ncleaned_data items')
-    #     for item in cleaned_data:
-    #         print(item)
+    #     return cleaned_data

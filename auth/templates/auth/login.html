@@ -60,6 +60,11 @@
                   Remember me
                 </label>
               </div>
+              {% for error in form.non_field_errors %}
+                <div class="mb-3 nonfield-feedback invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
               <button type="submit" class="btn btn-primary btn-block">
                 Login
               </button>
@@ -77,7 +82,7 @@
   <script>
     // If the form was validated, show the feedback for the errors.
     document.addEventListener('DOMContentLoaded', function() {
-      const names = ["{{ form.email.name }}", "{{ form.password.name }}"];
+      const names = ["{{ form.email.name }}", "{{ form.password.name }}", "nonfield"];
       names.forEach((name) => {
         const el = document.querySelector(`.${name}-feedback`);
         if (el && "{{ was_validated }}" === "was_validated") {
