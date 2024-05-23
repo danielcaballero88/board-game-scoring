@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "accounts.apps.AccountsConfig",
+    "scoring.apps.ScoringConfig",
 ]
 
 MIDDLEWARE = [
