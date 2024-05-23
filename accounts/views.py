@@ -21,11 +21,9 @@ def login(request: HttpRequest):
         if is_valid:
             # Get user data.
             email = form.cleaned_data["email"]
-            user_ = get_user_by_email(email)
-            username = user_.username if user_ else ""
             password = form.cleaned_data["password"]
             # Authenticate and login
-            user = authenticate(username=username, password=password)
+            user = authenticate(email=email, password=password)
             if user is not None:
                 # A backend authenticated the credentials
                 django_login(request, user)

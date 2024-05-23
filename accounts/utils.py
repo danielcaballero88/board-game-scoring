@@ -1,8 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 
+User = get_user_model()
 
-def get_user_by_email(email: str) -> User | None:
+
+def get_user_by_email(email: str) -> AbstractUser | None:
     try:
         # TODO: optimize the query by indexing the email field.
         # (or is that already done by default by Django? note that I'm
