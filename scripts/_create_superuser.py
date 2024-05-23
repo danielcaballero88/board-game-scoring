@@ -7,7 +7,7 @@ context (django). So call it with:
 $ python manage.py shell < create_superuser.py $USERNAME $EMAIL $PASSWORD
 """
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 USERNAME = "admin"
 EMAIL = "admin@bgs.com"
@@ -16,6 +16,7 @@ PASSWORD = "admin"
 
 def create_superuser(username, email, password):
     """Create a superuser."""
+    User = get_user_model()
     try:
         # Check if the superuser already exists
         if User.objects.filter(username=username).exists():
