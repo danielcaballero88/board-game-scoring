@@ -10,7 +10,7 @@ $ python manage.py shell < create_superuser.py $USERNAME $EMAIL $PASSWORD
 from django.contrib.auth.models import User
 
 USERNAME = "admin"
-EMAIL = "fake@email.com"
+EMAIL = "admin@bgs.com"
 PASSWORD = "admin"
 
 
