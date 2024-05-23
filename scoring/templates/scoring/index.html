@@ -1,1 +1,58 @@
-{% extends "base_with_nav.html" %}
+{% extends "base.html" %}
+
+{% block content_base %}
+  <div class="container-fluid landing-background text-center">
+    <div class="row mt-5 justify-content-center">
+      <div class="col-auto">
+        <h1 class="display-1 fw-500">
+          Board Game Scoring
+        </h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <p class="lead fw-400">
+          The best way to keep track of scoring for board games with friends
+        </p>
+      </div>
+    </div>
+    <div class="container landing-howto d-none d-md-flex mt-3 justify-content-center align-items-center">
+      <div class="row mx-2">
+        <div class="col-3">
+          <p class="lead fw-400">
+            Keep track of scores for all the games played with friends
+          </p>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col-3">
+          <p class="lead fw-400">
+            Get an automated ranking to see who's the best in each game
+          </p>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col-3">
+          <p class="lead fw-400">
+            Get in touch with new players in your area and arrange a meet up
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid flex-md-grow-1 d-flex flex-column justify-content-center">
+      <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col col-md-2">
+          <div class="btn btn-lg btn-primary landing-button-getstarted">
+            Get started
+          </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% comment %} TODO: find another stock photo or give attribution to vecteezy before deploying to any production environment {% endcomment %}
+  {% comment %} <a href="https://www.vecteezy.com/free-photos/board-games">Board Games Stock photos by Vecteezy</a> {% endcomment %}
+{% endblock content_base %}

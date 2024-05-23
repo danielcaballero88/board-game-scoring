@@ -6,6 +6,5 @@ from django.template import loader
 
 @login_required(login_url="/accounts/login")
 def index(request: HttpRequest):
-    template = loader.get_template("scoring/index.html")
     context = {}
     return render(request, "scoring/index.html", context)
