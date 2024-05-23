@@ -19,7 +19,7 @@
   overflow: hidden;
 
   /* The image used */
-  background-image: url('/static/images/dice2.jpg');
+  background-image: url('/static/images/dice.jpg');
   /* Center and scale the image */
   background-position: center;
   background-repeat: no-repeat;
