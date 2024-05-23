@@ -5,7 +5,6 @@ from django.http import HttpRequest
 from django.shortcuts import render
 
 from .forms import LoginForm
-from .utils import get_user_by_email
 
 
 def login(request: HttpRequest):
