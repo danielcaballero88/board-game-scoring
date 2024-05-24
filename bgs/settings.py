@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "accounts.apps.AccountsConfig",
+    "static_pages.apps.StaticPagesConfig",
     "scoring.apps.ScoringConfig",
 ]
 
