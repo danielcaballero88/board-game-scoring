@@ -4,6 +4,6 @@ from django.shortcuts import render
 
 
 @login_required(login_url="/accounts/login")
-def index(request: HttpRequest):
+def landing(request: HttpRequest):
     context = {}
-    return render(request, "scoring/index.html", context)
+    return render(request, "scoring/landing.html", context)
