@@ -29,6 +29,27 @@
   </div>
   <script>
     "use strict";
+    // Read from localStorage to get the status of the navbar (closed or open) when the document loads
+    window.addEventListener('DOMContentLoaded', function() {
+      const navbarStatus = localStorage.getItem('scoring-nav-status');
+      const scoringNavContainer = document.querySelector('.scoring-nav__container');
+      const toggleBtn = document.querySelector('.scoring-nav__toggle-btn');
+
+      if (navbarStatus === 'closed') {
+        scoringNavContainer.classList.add('closed');
+        toggleBtn.textContent = '>';
+      } else {
+        scoringNavContainer.classList.remove('closed');
+        toggleBtn.textContent = '<';
+      }
+    });
+
+    // Write the last value of the navbar status to localStorage before refreshing the page or visiting another page
+    window.addEventListener('beforeunload', function() {
+      const scoringNavContainer = document.querySelector('.scoring-nav__container');
+      const navbarStatus = scoringNavContainer.classList.contains('closed') ? 'closed' : 'open';
+      localStorage.setItem('scoring-nav-status', navbarStatus);
+    });
     // Listen to clicks on close navbar button
     document.querySelector('.scoring-nav__toggle-btn').addEventListener('click', function() {
       document.querySelector('.scoring-nav__container').classList.toggle('closed');
