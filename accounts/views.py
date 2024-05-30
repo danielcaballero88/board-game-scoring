@@ -1,13 +1,11 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as django_login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .forms import LoginForm
 
 
-def login(request: HttpRequest):
+def login_view(request: HttpRequest):
     was_validated = ""
 
     if request.method == "GET":
@@ -25,15 +23,17 @@ def login(request: HttpRequest):
             user = authenticate(email=email, password=password)
             if user is not None:
                 # A backend authenticated the credentials
-                django_login(request, user)
-                messages.success(request, f"Login success for {email}:{password}")
+                login(request, user)
             else:
                 # No backend authenticated the credentials
                 form.add_error(None, "Wrong credentials")
-            # redirect to a new URL:
-            # (commented out for now because the login page is the only page so far)
-            # return HttpResponseRedirect(reverse("<app>:<url>"))
+            return redirect("scoring:index")
 
     return render(
         request, "auth/login.html", {"form": form, "was_validated": was_validated}
     )
+
+
+def logout_view(request: HttpRequest):
+    logout(request)
+    return redirect("/")
