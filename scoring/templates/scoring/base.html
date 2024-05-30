@@ -2,6 +2,11 @@
 
 {% load static %}
 
+{% block extrahead_base %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/base.css' %}" />
+{% endblock extrahead_base %}
 {% block content_base %}
   <div class="container-fluid h-100 p-0 d-flex flex-md-row">
     <div class="scoring-nav__container">

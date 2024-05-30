@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block extrahead_base %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'static_pages/css/landing.css' %}" />
+{% endblock extrahead_base %}
 {% block content_base %}
   <div class="container-fluid landing-background text-center">
     <div class="row mt-5 justify-content-center">
