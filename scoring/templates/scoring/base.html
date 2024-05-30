@@ -1,26 +1,50 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content_base %}
   <div class="container-fluid p-0 overflow-hidden d-flex flex-md-row">
     <div class="scoring-nav__container">
       <div class="scoring-nav__item header dark">
-          <a href="">BGS</a>
-        <span class="scoring-nav__toggle-btn">X</span>
+        <a href="">
+          <div class="scoring-nav__item-icon">
+            <img src="{% static "favicon.png" %}" alt="" />
+          </div>
+          <span>BGS</span></a>
+        <span class="scoring-nav__toggle-btn">&lt;</span>
       </div>
       <div class="scoring-nav__content">
         <div class="scoring-nav__item">
-          <a href="">Item 1</a>
+          <a href=""><i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>Current games</span></a>
         </div>
         <div class="scoring-nav__item">
-          <a href="">Item 2</a>
+          <a href=""><i class="bi bi-clock-history scoring-nav__item-icon"></i><span>Previous scores</span></a>
         </div>
-        <div class="scoring-nav__item filler"></div>
+        <div class="scoring-nav__item filler">
+        </div>
         <div class="scoring-nav__item">
-          <a href="">Sign out</a>
+          <a href=""><i class="bi bi-box-arrow-left scoring-nav__item-icon"></i><span>Sign out</span></a>
         </div>
       </div>
     </div>
     <div class="scoring-content">
     </div>
   </div>
+  <script>
+    "use strict";
+    // Listen to clicks on close navbar button
+    document.querySelector('.scoring-nav__toggle-btn').addEventListener('click', function() {
+      document.querySelector('.scoring-nav__container').classList.toggle('closed');
+    });
+    // Listen to classes in .scoring-nav__toggle-btn and change the text from < to > if "closed" is present
+    const scoringNavContainer = document.querySelector('.scoring-nav__container');
+    const toggleBtn = document.querySelector('.scoring-nav__toggle-btn');
+    toggleBtn.addEventListener('click', function() {
+      if (scoringNavContainer.classList.contains('closed')) {
+        toggleBtn.textContent = '>';
+      } else {
+        toggleBtn.textContent = '<';
+      }
+    });
+  </script>
 {% endblock content_base %}

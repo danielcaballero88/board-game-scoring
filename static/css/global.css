@@ -1,15 +1,15 @@
 :root {
---alice-blue: 227, 235, 242;
---columbia-blue: 182, 220, 241;
---space-cadet: 47, 50, 71;
---rojo: 221, 26, 24;
---violet-blue: 71, 86, 172;
+  --alice-blue: 227, 235, 242;
+  --columbia-blue: 182, 220, 241;
+  --space-cadet: 47, 50, 71;
+  --rojo: 221, 26, 24;
+  --violet-blue: 71, 86, 172;
 
---rgba-alice-blue: rgba(227, 235, 242, 1);
---rgba-columbia-blue: rgba(182, 220, 241, 1);
---rgba-space-cadet: rgba(47, 50, 71, 1);
---rgba-rojo: rgba(221, 26, 24, 1);
---rgba-violet-blue: rgba(71, 86, 172, 1);
+  --rgba-alice-blue: rgba(227, 235, 242, 1);
+  --rgba-columbia-blue: rgba(182, 220, 241, 1);
+  --rgba-space-cadet: rgba(47, 50, 71, 1);
+  --rgba-rojo: rgba(221, 26, 24, 1);
+  --rgba-violet-blue: rgba(71, 86, 172, 1);
 }
 
 * {
@@ -85,6 +85,10 @@ body {
   --scoring-nav-width: 256px;
 }
 
+.scoring-nav__container.closed {
+  --scoring-nav-width: 40px;
+}
+
 .scoring-nav__item {
   position: relative;
   width: var(--scoring-nav-width);
@@ -122,11 +126,18 @@ body {
   width: 100%;
   height: 100%;
 
-  padding-left: 1rem;
-
   display: flex;
   justify-content: start;
   align-items: center;
+}
+
+.scoring-nav__item a .scoring-nav__item-icon {
+  width: 40px;
+  text-align: center;
+}
+
+.scoring-nav__container.closed .scoring-nav__item a span {
+  display: none;
 }
 
 .scoring-nav__brand {
