@@ -101,6 +101,12 @@ body {
 .scoring-nav__item.header {
   height: 80px;
   margin-top: 0;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.scoring-nav__brand {
+  padding: 0.5rem;
 }
 
 /* .scoring-nav__item.dark::after {
@@ -140,18 +146,13 @@ body {
   display: none;
 }
 
-.scoring-nav__brand {
-  font-weight: 400;
-  font-size: 2rem;
-}
-
 .scoring-nav__toggle-btn {
   position: absolute;
   right: 0;
   top: 0;
 
   width: 2rem;
-  height: 2rem;
+  height: 100%;
 
   cursor: pointer;
 
