@@ -1,1 +1,37 @@
 {% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/index.css' %}" />
+{% endblock extrahead_scoring %}
+{% block content_scoring %}
+  <div class="container h-100">
+    <div class="row">
+      <div class="col-12 p-0">
+        <div class="scoring-content__section-header">
+          <span>Previous Scores</span>
+        </div>
+      </div>
+    </div>
+    <div class="row scoring-content__row">
+      <div class="col-4 p-0">
+        <div class="scoring-content__section-item">
+          <span>Game</span>
+        </div>
+      </div>
+      <div class="col-4 p-0">
+        <div class="scoring-content__section-item">
+          <span>Date</span>
+        </div>
+      </div>
+      <div class="col-4 p-0">
+        <div class="scoring-content__section-item">
+          <span>Winner</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content_scoring %}

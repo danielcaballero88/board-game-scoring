@@ -6,9 +6,11 @@
   <link rel="stylesheet"
         type="text/css"
         href="{% static 'scoring/css/base.css' %}" />
+  {% block extrahead_scoring %}
+  {% endblock extrahead_scoring %}
 {% endblock extrahead_base %}
 {% block content_base %}
-  <div class="container-fluid h-100 p-0 d-flex flex-md-row">
+  <div class="scoring-container">
     <div class="scoring-nav__container">
       <div class="scoring-nav__item header dark">
         <a href="">
@@ -30,7 +32,9 @@
         </div>
       </div>
     </div>
-    <div class="scoring-content">
+    <div class="scoring-content d-flex flex-column">
+      {% block content_scoring %}
+      {% endblock content_scoring %}
     </div>
   </div>
   <script>

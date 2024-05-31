@@ -1,0 +1,30 @@
+.container {
+  border: 2px solid black;
+}
+
+.scoring-content__section-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  width: 100%;
+  text-align: center;
+
+  background-color: rgba(var(--violet-blue));
+  color: rgba(var(--alice-blue));
+}
+
+.scoring-content__row {
+  border-bottom: 2px solid rgba(var(--violet-blue));
+}
+
+.scoring-content__section-item {
+  font-size: 1rem;
+  font-weight: 400;
+
+  width: 100%;
+
+  background-color: rgba(var(--columbia-blue));
+
+  border-left: 2px solid rgba(var(--violet-blue));
+  border-right: 2px solid rgba(var(--violet-blue));
+}
