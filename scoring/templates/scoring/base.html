@@ -16,7 +16,9 @@
         <a href="">
           <i class="bi bi-house scoring-nav__item-icon"></i>
           <span class="scoring-nav__brand">BGS</span></a>
-        <span class="scoring-nav__toggle-btn">&lt;</span>
+        <div class="scoring-nav__toggle-btn">
+          <i class="bi bi-arrow-bar-left"></i>
+        </div>
       </div>
       <div class="scoring-nav__content">
         <div class="scoring-nav__item only-sm">
@@ -50,13 +52,14 @@
       const navbarStatus = localStorage.getItem('scoring-nav-status');
       const scoringNavContainer = document.querySelector('.scoring-nav__container');
       const toggleBtn = document.querySelector('.scoring-nav__toggle-btn');
+      const toggleBtnIcon = document.querySelector('.scoring-nav__toggle-btn i');
 
       if (navbarStatus === 'closed') {
         scoringNavContainer.classList.add('closed');
-        toggleBtn.textContent = '>';
+        toggleBtnIcon.className = 'bi bi-arrow-bar-right';
       } else {
         scoringNavContainer.classList.remove('closed');
-        toggleBtn.textContent = '<';
+        toggleBtnIcon.className = 'bi bi-arrow-bar-left';
       }
     });
 
@@ -73,11 +76,12 @@
     // Listen to classes in .scoring-nav__toggle-btn and change the text from < to > if "closed" is present
     const scoringNavContainer = document.querySelector('.scoring-nav__container');
     const toggleBtn = document.querySelector('.scoring-nav__toggle-btn');
+    const toggleBtnIcon = document.querySelector('.scoring-nav__toggle-btn i');
     toggleBtn.addEventListener('click', function() {
       if (scoringNavContainer.classList.contains('closed')) {
-        toggleBtn.textContent = '>';
+        toggleBtnIcon.className = 'bi bi-arrow-bar-right';
       } else {
-        toggleBtn.textContent = '<';
+        toggleBtnIcon.className = 'bi bi-arrow-bar-left';
       }
     });
   </script>
