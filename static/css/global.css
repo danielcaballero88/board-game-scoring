@@ -1,15 +1,25 @@
 :root {
-  --alice-blue: 227, 235, 242;
-  --columbia-blue: 182, 220, 241;
-  --space-cadet: 47, 50, 71;
-  --rojo: 221, 26, 24;
-  --violet-blue: 71, 86, 172;
-
   --rgba-alice-blue: rgba(227, 235, 242, 1);
   --rgba-columbia-blue: rgba(182, 220, 241, 1);
   --rgba-space-cadet: rgba(47, 50, 71, 1);
   --rgba-rojo: rgba(221, 26, 24, 1);
   --rgba-violet-blue: rgba(71, 86, 172, 1);
+  --rgba-antiflash-white: rgba(243, 246, 250, 1);
+  --rgba-white: rgba(255, 255, 255, 1);
+
+  --alice-blue: 227, 235, 242;
+  --columbia-blue: 182, 220, 241;
+  --space-cadet: 47, 50, 71;
+  --rojo: 221, 26, 24;
+  --violet-blue: 71, 86, 172;
+  --antiflash-white: 243, 246, 250;
+  --white: 255, 255, 255;
+
+  --background-color-light: var(--white);
+  --primary-color-light: var(--columbia-blue);
+  --secondary-color-light: var(--violet-blue);
+  --accent-color-light: var(--rojo);
+  --text-color-light: var(--space-cadet);
 }
 
 * {
@@ -22,7 +32,8 @@ html, body {
 }
 
 body {
-  background-color: rgba(var(--alice-blue), 1);
+  background-color: rgba(var(--background-color-light), 1);
+  color: rgba(var(--text-color-light), 1);
   min-height: 100svh;
 }
 
