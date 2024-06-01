@@ -5,28 +5,34 @@
 {% block extrahead_base %}
   <link rel="stylesheet"
         type="text/css"
-        href="{% static 'scoring/css/base.css' %}" />
+        href="{% static 'scoring/css/nav.css' %}" />
   {% block extrahead_scoring %}
   {% endblock extrahead_scoring %}
 {% endblock extrahead_base %}
 {% block content_base %}
   <div class="scoring-container">
     <div class="scoring-nav__container">
-      <div class="scoring-nav__item header dark">
+      <div class="scoring-nav__item header">
         <a href="">
           <i class="bi bi-house scoring-nav__item-icon"></i>
           <span class="scoring-nav__brand">BGS</span></a>
         <span class="scoring-nav__toggle-btn">&lt;</span>
       </div>
       <div class="scoring-nav__content">
-        <div class="scoring-nav__item">
-          <a href=""><i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>Current games</span></a>
+        <div class="scoring-nav__item only-sm">
+          <a href=""><i class="bi bi-house scoring-nav__item-icon"></i><span>Home</span></a>
         </div>
+        <div class="scoring-nav__item">
+          <a href=""><i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>All games</span></a>
+        </div>
+        <hr />
         <div class="scoring-nav__item">
           <a href=""><i class="bi bi-clock-history scoring-nav__item-icon"></i><span>Previous scores</span></a>
         </div>
+        <hr />
         <div class="scoring-nav__item filler">
         </div>
+        <hr />
         <div class="scoring-nav__item">
           <a href="{% url "accounts:logout" %}"><i class="bi bi-box-arrow-left scoring-nav__item-icon"></i><span>Sign out</span></a>
         </div>
