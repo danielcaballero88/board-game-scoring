@@ -9,7 +9,7 @@
 }
 
 .scoring-nav__container {
-  height: calc(100% - 2vw);
+  height: calc(100svh - 2vw);
 
   margin: 1vw 0;
   margin-right: 1vw;
