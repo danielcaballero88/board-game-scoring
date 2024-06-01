@@ -30,3 +30,21 @@ def get_user_tables(username: str) -> list[dict]:
         user_tables.append(table)
 
     return user_tables
+
+
+def get_favorite_games(username: str) -> list[dict]:
+    """Get favorite games of a user."""
+    user_profile = get_user_profile(username)
+    if not user_profile:
+        return []
+
+    fav_games_ids = user_profile.get("favorite_games", [])
+
+    fav_games = []
+    for game_id in fav_games_ids:
+        fav_game = {}
+        fav_game["game"] = games.get(game_id)["name"]
+        fav_game["elo"] = user_profile["elo"][game_id]
+        fav_games.append(fav_game)
+
+    return fav_games
