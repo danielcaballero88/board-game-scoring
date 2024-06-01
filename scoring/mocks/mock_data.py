@@ -183,7 +183,7 @@ tables = {
 
 # User data here is about previous games played mostly.
 user_data = {
-    "admin": {"tables": ["table1", "table2"]},
-    "player1": {"tables": ["table1"]},
-    "player2": {"tables": ["table1", "table2"]},
+    "admin": {"tables": ["table_1", "table_2"]},
+    "player1": {"tables": ["table_1"]},
+    "player2": {"tables": ["table_1", "table_2"]},
 }

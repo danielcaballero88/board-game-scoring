@@ -1,4 +1,4 @@
-from .mock_data import tables, user_data, user_profiles
+from .mock_data import games, tables, user_data, user_profiles
 
 
 def get_user_profile(username: str) -> dict | None:
@@ -17,11 +17,15 @@ def get_user_tables(username: str) -> list[dict]:
 
     user_tables = []
     for user_table_id in user_tables_ids:
-        table = tables.get(user_table_id["table_id"])
+        table = {}
+        table_db = tables.get(user_table_id)
+        table["game"] = games[table_db["game"]]["name"]
+        table["winner"] = table_db["winner"]
+        table["date"] = table_db["start_date"]
         table["total_scores"] = {}
-        for playername in table["scores"]:
+        for playername in table_db["scores"]:
             table["total_scores"][playername] = calc_total_scores(
-                table["scores"][playername]
+                table_db["scores"][playername]
             )
         user_tables.append(table)
 
