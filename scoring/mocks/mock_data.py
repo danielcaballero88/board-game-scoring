@@ -1,35 +1,25 @@
 """Mock data simulating a db for development purposes."""
 
-# Profiles are user profiles. Other user data is already stored in the DB
-# in the account app tables. But that data is related to auth. Profiles
-# data is more about user preferences (e.g. favorite games, favorite
-# genres, languages they speak, elo score for each game, etc.)
-user_profiles = {
+# Players are users in the scoring context. Other user data is already
+# stored in the DB in the account app tables. But that data is related
+# to auth. Profiles data is more about user preferences (e.g. favorite
+# games, favorite genres, languages they speak, elo score for each game,
+# etc.)
+players = {
     "admin": {
         "favorite_games": ["agricola", "catan"],
-        "elo": {
-            "agricola": 200,
-            "catan": 250,
-        },
+        "tables": ["table_1", "table_2"],
     },
     "player1": {
         "favorite_games": ["agricola"],
-        "elo": {
-            "agricola": 150,
-        },
+        "tables": ["table_1"],
     },
     "player2": {
         "favorite_games": ["agricola", "catan"],
-        "elo": {
-            "agricola": 100,
-            "catan": 200,
-        },
+        "tables": ["table_1", "table_2"],
     },
     "player3": {
         "favorite_games": ["catan"],
-        "elo": {
-            "catan": 150,
-        },
     },
 }
 
@@ -179,11 +169,4 @@ tables = {
             },
         },
     },
-}
-
-# User data here is about previous games played mostly.
-user_data = {
-    "admin": {"tables": ["table_1", "table_2"]},
-    "player1": {"tables": ["table_1"]},
-    "player2": {"tables": ["table_1", "table_2"]},
 }

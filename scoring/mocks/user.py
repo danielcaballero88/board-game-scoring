@@ -1,9 +1,9 @@
-from .mock_data import games, tables, user_data, user_profiles
+from .mock_data import games, players, tables
 
 
-def get_user_profile(username: str) -> dict | None:
+def get_player_obj(username: str) -> dict | None:
     """Get user profile data."""
-    return user_profiles.get(username)
+    return players.get(username)
 
 
 def get_user_tables(username: str) -> list[dict]:
@@ -12,8 +12,8 @@ def get_user_tables(username: str) -> list[dict]:
     def calc_total_scores(scores):
         return sum(scores.values())
 
-    data = user_data.get(username, {})
-    user_tables_ids = data.get("tables", [])
+    player_obj = players.get(username, {})
+    user_tables_ids = player_obj.get("tables", [])
 
     user_tables = []
     for user_table_id in user_tables_ids:
@@ -34,17 +34,30 @@ def get_user_tables(username: str) -> list[dict]:
 
 def get_favorite_games(username: str) -> list[dict]:
     """Get favorite games of a user."""
-    user_profile = get_user_profile(username)
-    if not user_profile:
+    player_obj = get_player_obj(username)
+    if not player_obj:
         return []
 
-    fav_games_ids = user_profile.get("favorite_games", [])
+    fav_games_ids = player_obj.get("favorite_games", [])
 
     fav_games = []
     for game_id in fav_games_ids:
+        game_obj = games.get(game_id)
+        table_objs = [
+            tables[table_id]
+            for table_id in player_obj.get("tables", [])
+            if tables[table_id]["game"] == game_id
+        ]
         fav_game = {}
-        fav_game["game"] = games.get(game_id)["name"]
-        fav_game["elo"] = user_profile["elo"][game_id]
+        fav_game["name"] = game_obj["name"]
+        fav_game["description"] = game_obj["description"]
+        fav_game["img_src"] = game_obj["image"]
+        fav_game["record"] = {
+            "total_played": len(table_objs),
+            "total_won": len(
+                [table for table in table_objs if table["winner"] == username]
+            ),
+        }
         fav_games.append(fav_game)
 
     return fav_games

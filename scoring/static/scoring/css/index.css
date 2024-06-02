@@ -26,6 +26,22 @@
   border-bottom: 0;
 }
 
+.list-group-item img {
+  height: 40px;
+  width: 40px;
+  margin-right: 1rem;
+}
+
+.game-name {
+  display: block;
+}
+
+.game-description {
+  display: block;
+  font-size: 0.7rem;
+  color: rgba(var(--text-color), 0.7);
+}
+
 @media screen and (max-width: 768px) {
   .card:first-child {
     margin-top: .5rem;
