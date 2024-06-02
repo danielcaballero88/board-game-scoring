@@ -116,6 +116,11 @@
   align-items: center;
 }
 
+.scoring-nav__container.closed .scoring-nav__toggle-btn {
+  inset: 0;
+  width: auto;
+}
+
 @media screen and (max-width: 768px) {
   .scoring-container {
     min-height: calc(100% - var(--scoring-nav-sm-height) - 1vw);
