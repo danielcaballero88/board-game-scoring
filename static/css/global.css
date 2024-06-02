@@ -15,11 +15,11 @@
   --antiflash-white: 243, 246, 250;
   --white: 255, 255, 255;
 
-  --background-color-light: var(--white);
-  --primary-color-light: var(--columbia-blue);
-  --secondary-color-light: var(--violet-blue);
-  --accent-color-light: var(--rojo);
-  --text-color-light: var(--space-cadet);
+  --background-color: var(--white);
+  --primary-color: var(--columbia-blue);
+  --secondary-color: var(--violet-blue);
+  --accent-color: var(--rojo);
+  --text-color: var(--space-cadet);
 }
 
 * {
@@ -32,8 +32,8 @@ html, body {
 }
 
 body {
-  background-color: rgba(var(--background-color-light), 1);
-  color: rgba(var(--text-color-light), 1);
+  background-color: rgba(var(--background-color), 1);
+  color: rgba(var(--text-color), 1);
   min-height: 100svh;
 }
 

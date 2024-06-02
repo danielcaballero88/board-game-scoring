@@ -40,7 +40,7 @@
   font-size: 2rem;
   margin-bottom: 0.2rem;
   border-radius: 0.5rem;
-  background-color: rgba(var(--primary-color-light), 1);
+  background-color: rgba(var(--primary-color), 1);
 }
 
 .scoring-nav__item.header .scoring-nav__item-icon {
@@ -57,7 +57,7 @@
   display: flex;
   flex-direction: column;
 
-  background-color: rgba(var(--primary-color-light), 1);
+  background-color: rgba(var(--primary-color), 1);
   border-radius: 0.5rem;
 }
 
@@ -92,7 +92,7 @@
   margin: 0;
   /* opacity: 1; */
   border: none;
-  border-top: solid 1px rgba(var(--secondary-color-light));
+  border-top: solid 1px rgba(var(--secondary-color));
   margin: 0 0.5rem;
 }
 
