@@ -12,20 +12,20 @@ def get_user_tables(username: str) -> list[dict]:
     def calc_total_scores(scores):
         return sum(scores.values())
 
-    player_obj = players.get(username, {})
-    user_tables_ids = player_obj.get("tables", [])
+    table_objs_gen = (
+        table_obj for table_obj in tables.values() if username in table_obj["players"]
+    )
 
     user_tables = []
-    for user_table_id in user_tables_ids:
+    for table_obj in table_objs_gen:
         table = {}
-        table_db = tables.get(user_table_id)
-        table["game"] = games[table_db["game"]]["name"]
-        table["winner"] = table_db["winner"]
-        table["date"] = table_db["start_date"]
+        table["game"] = games[table_obj["game"]]["name"]
+        table["winner"] = table_obj["winner"]
+        table["date"] = table_obj["start_date"]
         table["total_scores"] = {}
-        for playername in table_db["scores"]:
+        for playername in table_obj["scores"]:
             table["total_scores"][playername] = calc_total_scores(
-                table_db["scores"][playername]
+                table_obj["scores"][playername]
             )
         user_tables.append(table)
 
@@ -44,9 +44,9 @@ def get_favorite_games(username: str) -> list[dict]:
     for game_id in fav_games_ids:
         game_obj = games.get(game_id)
         table_objs = [
-            tables[table_id]
-            for table_id in player_obj.get("tables", [])
-            if tables[table_id]["game"] == game_id
+            table_obj
+            for table_obj in tables.values()
+            if table_obj["game"] == game_id and username in table_obj["players"]
         ]
         fav_game = {}
         fav_game["name"] = game_obj["name"]

@@ -8,15 +8,12 @@
 players = {
     "admin": {
         "favorite_games": ["agricola", "catan"],
-        "tables": ["table_1", "table_2"],
     },
     "player1": {
         "favorite_games": ["agricola"],
-        "tables": ["table_1"],
     },
     "player2": {
         "favorite_games": ["agricola", "catan"],
-        "tables": ["table_1", "table_2"],
     },
     "player3": {
         "favorite_games": ["catan"],
