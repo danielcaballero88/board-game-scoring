@@ -93,11 +93,15 @@ class Player(models.Model):
     """
 
     nickname = models.CharField(max_length=100)
-    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True)
     favorite_games = models.ManyToManyField(Game)
 
+    @property
+    def is_registered(self):
+        return self.user.username if self.user else ""
+
     def __str__(self):
-        return self.nickname
+        return f"{self.nickname} ({self.is_registered})"
 
 
 class Table(models.Model):
