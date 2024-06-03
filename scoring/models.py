@@ -92,7 +92,7 @@ class Player(models.Model):
         - table_winner_set (one to many)
     """
 
-    nickname = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=100, unique=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True)
     favorite_games = models.ManyToManyField(Game)
 
