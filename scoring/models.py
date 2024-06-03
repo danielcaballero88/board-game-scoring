@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -14,6 +15,9 @@ class Genre(models.Model):
     """
 
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class Game(models.Model):
@@ -36,14 +40,24 @@ class Game(models.Model):
     """
 
     name = models.CharField(max_length=100)
-    min_players = models.IntegerField(null=True)
-    max_players = models.IntegerField(null=True)
-    min_playtime = models.IntegerField(null=True)
-    max_playtime = models.IntegerField(null=True)
-    complexity = models.CharField(max_length=1, null=True)
-    description = models.TextField(null=True)
+    min_players = models.IntegerField(blank=True, null=True)
+    max_players = models.IntegerField(blank=True, null=True)
+    min_playtime = models.IntegerField(blank=True, null=True)
+    max_playtime = models.IntegerField(blank=True, null=True)
+    complexity = models.IntegerField(
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(5),
+        ],
+    )
+    description = models.TextField(blank=True)
     genres = models.ManyToManyField(Genre)
-    image = models.URLField(null=True)
+    image = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class ScoringCategory(models.Model):
@@ -57,10 +71,13 @@ class ScoringCategory(models.Model):
     """
 
     name = models.CharField(max_length=100)
-    description = models.TextField(null=True)
+    description = models.TextField(blank=True)
     game = models.ForeignKey(  # many-to-one relationship
         Game, on_delete=models.CASCADE, related_name="scoring_category_set"
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Player(models.Model):
@@ -78,6 +95,9 @@ class Player(models.Model):
     nickname = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     favorite_games = models.ManyToManyField(Game)
+
+    def __str__(self):
+        return self.nickname
 
 
 class Table(models.Model):
@@ -99,6 +119,13 @@ class Table(models.Model):
     start_date = models.DateField()
     duration = models.IntegerField("Duration in minutes")
 
+    def __str__(self):
+        return (
+            f"{self.game.name} - "
+            f"{self.start_date} - "
+            f"{[player.nickname for player in self.players.all()]}"
+        )
+
 
 class Score(models.Model):
     """Model representing a score for a player, table, scoring category.
@@ -115,3 +142,11 @@ class Score(models.Model):
     player = models.ForeignKey(Player, on_delete=models.PROTECT)
     scoring_category = models.ForeignKey(ScoringCategory, on_delete=models.PROTECT)
     value = models.IntegerField()
+
+    def __str__(self):
+        return (
+            f"{self.table.game.name} - "
+            f"{self.player.nickname} - "
+            f"{self.scoring_category.name} - "
+            f"{self.value}"
+        )
