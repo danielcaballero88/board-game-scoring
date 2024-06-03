@@ -57,7 +57,7 @@ class ScoringCategory(models.Model):
     """
 
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True)
     game = models.ForeignKey(  # many-to-one relationship
         Game, on_delete=models.CASCADE, related_name="scoring_category_set"
     )
