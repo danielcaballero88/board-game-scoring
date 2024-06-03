@@ -36,14 +36,14 @@ class Game(models.Model):
     """
 
     name = models.CharField(max_length=100)
-    min_players = models.IntegerField()
-    max_players = models.IntegerField()
-    min_playtime = models.IntegerField()
-    max_playtime = models.IntegerField()
-    complexity = models.CharField(max_length=1)
-    description = models.TextField()
+    min_players = models.IntegerField(null=True)
+    max_players = models.IntegerField(null=True)
+    min_playtime = models.IntegerField(null=True)
+    max_playtime = models.IntegerField(null=True)
+    complexity = models.CharField(max_length=1, null=True)
+    description = models.TextField(null=True)
     genres = models.ManyToManyField(Genre)
-    image = models.URLField()
+    image = models.URLField(null=True)
 
 
 class ScoringCategory(models.Model):
