@@ -83,25 +83,18 @@ class ScoringCategory(models.Model):
 class Player(models.Model):
     """Model representing a player.
 
-    Attributes:
-        - nickname: Name shown for gaming purposes.
     Relationships:
         - user (one to one): Auth user object.
-        - favorite_game_set (many to many)
+        - favorite_games (many to many)
         - table_set (many to many)
         - table_winner_set (one to many)
     """
 
-    nickname = models.CharField(max_length=100, unique=True)
-    user = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True)
-    favorite_games = models.ManyToManyField(Game)
-
-    @property
-    def is_registered(self):
-        return self.user.username if self.user else ""
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    favorite_games = models.ManyToManyField(Game, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.nickname} ({self.is_registered})"
+        return f"{self.user.username}"
 
 
 class Table(models.Model):
@@ -111,17 +104,30 @@ class Table(models.Model):
         - name: The name of the table.
     Relationships:
         - game (many to one): The game that the table is for.
+        - owner (one to one): The user that created the table.
         - player_set (many to many): The players at the table.
         - winner (many to one): The winning player.
+        - score_set (one to many): The scores for the table.
     """
 
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.PROTECT)
     players = models.ManyToManyField(Player)
     winner = models.ForeignKey(
         Player, related_name="table_winner_set", on_delete=models.PROTECT
     )
     start_date = models.DateField()
-    duration = models.IntegerField("Duration in minutes")
+    duration = models.IntegerField(
+        "Duration in minutes", null=True, blank=True, validators=[MinValueValidator(0)]
+    )
+
+    @property
+    def all_players(self):
+        return {
+            "owner": self.owner,
+            "players": self.players.all(),
+            "table_players": self.table_player_set.all(),
+        }
 
     def __str__(self):
         return (

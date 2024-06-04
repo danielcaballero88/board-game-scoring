@@ -14,3 +14,6 @@ class AppUser(AbstractUser):
     USERNAME_FIELD = "email"
     email = models.EmailField("Email address", unique=True)
     REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.username or self.email
