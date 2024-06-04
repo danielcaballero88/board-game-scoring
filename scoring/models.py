@@ -105,8 +105,9 @@ class Table(models.Model):
     Relationships:
         - game (many to one): The game that the table is for.
         - owner (one to one): The user that created the table.
-        - player_set (many to many): The players at the table.
         - winner (many to one): The winning player.
+        - player_set (many to many): The players at the table, including
+          the owner and the winner.
         - score_set (one to many): The scores for the table.
     """
 
@@ -120,14 +121,6 @@ class Table(models.Model):
     duration = models.IntegerField(
         "Duration in minutes", null=True, blank=True, validators=[MinValueValidator(0)]
     )
-
-    @property
-    def all_players(self):
-        return {
-            "owner": self.owner,
-            "players": self.players.all(),
-            "table_players": self.table_player_set.all(),
-        }
 
     def __str__(self):
         return (

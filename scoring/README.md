@@ -23,7 +23,7 @@ This is an instance of a game being played or having been played.
 
 - It has an `owner` which is a `Player`.
 - It has a `winner` which is a `Player`.
-- It has a `player_set` which is a set of `Player` at the table, besides the `owner`.
+- It has a `player_set` which is a set of `Player` at the table, including the `owner` and the `winner`.
 - It has a `score_set` which is a list of scores.
   - The score model is `Score` which represents a score for a single player, at a single table, for a single scoring category. Besides these relationships it has a single integer field: `value`.
 
