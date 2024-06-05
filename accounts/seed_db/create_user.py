@@ -9,14 +9,22 @@ def create_user(username: str, email: str, password: str, superuser: bool = Fals
     try:
         # Check if the user already exists
         if User.objects.filter(username=username).exists():
-            print(f"Error: user with username '{username}' already exists.")
+            print(f"User with username '{username}' already exists.")
             return
 
         # Create the superuser
         if superuser:
-            User.objects.create_superuser(username, email, password)
+            User.objects.create_superuser(
+                username=username,
+                email=email,
+                password=password,
+            )
         else:
-            User.objects.create(username, email, password)
+            User.objects.create(
+                username=username,
+                email=email,
+                password=password,
+            )
         print("User created successfully.")
     except Exception as exc:  # pylint: disable=broad-except
         print(f"Error creating user: {traceback.format_exc(exc)}")
