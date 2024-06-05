@@ -1,4 +1,4 @@
-from .mock_data import games
+from .data import games
 
 
 def get_game_slug(game_name: str) -> str:

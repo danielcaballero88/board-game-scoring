@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from scoring.mocks.user import get_favorite_games, get_user_tables
+from scoring.seed_db.user import get_favorite_games, get_user_tables
 
 
 @login_required(login_url="/accounts/login")

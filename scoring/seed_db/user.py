@@ -1,4 +1,4 @@
-from .mock_data import games, players, tables
+from .data import games, players, tables
 
 
 def get_player_obj(username: str) -> dict | None:

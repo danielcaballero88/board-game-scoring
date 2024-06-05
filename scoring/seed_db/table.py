@@ -1,4 +1,4 @@
-from .mock_data import tables
+from .data import tables
 
 
 def get_table(table_id: str) -> dict | None:
