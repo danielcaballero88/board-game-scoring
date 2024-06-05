@@ -91,7 +91,7 @@ class Player(models.Model):
     """
 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    favorite_games = models.ManyToManyField(Game, null=True, blank=True)
+    favorite_games = models.ManyToManyField(Game)
 
     def __str__(self):
         return f"{self.user.username}"
@@ -130,7 +130,7 @@ class Table(models.Model):
         return (
             f"{self.game.name} - "
             f"{self.start_date} - "
-            f"{[player.nickname for player in self.players.all()]}"
+            f"{[player.user.username for player in self.players.all()]}"
         )
 
 
@@ -143,6 +143,10 @@ class Score(models.Model):
         - player (many to one)
         - scoring_category (many to one)
         - table (many to one)
+
+    Validation:
+        - It's important to check that the scoring category belongs to
+        the game that the table is for.
     """
 
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
@@ -150,10 +154,17 @@ class Score(models.Model):
     scoring_category = models.ForeignKey(ScoringCategory, on_delete=models.PROTECT)
     value = models.IntegerField()
 
+    def save(self, *args, **kwargs):
+        # Validate that the scoring category belongs to the same game
+        # as the table game being played, otherwise it's wrong.
+        if self.scoring_category.game != self.table.game:
+            raise ValueError("Scoring category must belong to the game.")
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return (
             f"{self.table.game.name} - "
-            f"{self.player.nickname} - "
+            f"{self.player.user.username} - "
             f"{self.scoring_category.name} - "
             f"{self.value}"
         )

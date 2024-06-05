@@ -47,6 +47,10 @@ class TableAdmin(admin.ModelAdmin):
     exclude = ["players"]
 
 
+# TODO: implement a custom model form for tables so the scores limit the
+# choices to the valid scoring categories for the table game. Otherwise
+# when adding a score in a table in the admin page, all scoring
+# categories for all games are shown.
 admin.site.register(Table, TableAdmin)
 
 
