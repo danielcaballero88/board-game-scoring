@@ -39,7 +39,7 @@ class Game(models.Model):
         - table_set (one to many): Tables that played this game.
     """
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     min_players = models.IntegerField(blank=True, null=True)
     max_players = models.IntegerField(blank=True, null=True)
     min_playtime = models.IntegerField(blank=True, null=True)
