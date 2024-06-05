@@ -104,7 +104,7 @@ class Table(models.Model):
         - name: The name of the table.
     Relationships:
         - game (many to one): The game that the table is for.
-        - owner (one to one): The user that created the table.
+        - owner (many to one): The user that created the table.
         - winner (many to one): The winning player.
         - player_set (many to many): The players at the table, including
           the owner and the winner.
@@ -112,10 +112,14 @@ class Table(models.Model):
     """
 
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    owner = models.OneToOneField(User, on_delete=models.PROTECT)
     players = models.ManyToManyField(Player)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)
     winner = models.ForeignKey(
-        Player, related_name="table_winner_set", on_delete=models.PROTECT
+        Player,
+        related_name="table_winner_set",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
     )
     start_date = models.DateField()
     duration = models.IntegerField(
