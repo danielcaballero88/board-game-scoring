@@ -15,6 +15,11 @@ users = {
         "email": "player2@bgs.com",
         "password": "player2",
     },
+    "player3": {
+        "username": "player3",
+        "email": "player3@bgs.com",
+        "password": "player3",
+    }
 }
 
 # Which users are superusers

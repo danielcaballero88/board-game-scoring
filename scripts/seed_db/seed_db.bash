@@ -8,5 +8,5 @@ echo "Root directory of the Git repository: $ROOT_DIR"
 cd $ROOT_DIR
 
 # Run the seed scripts for each app
-python manage.py shell < $ROOT_DIR/accounts/seed_db/seed_db.py
+# python manage.py shell < $ROOT_DIR/accounts/seed_db/seed_db.py
 python manage.py shell < $ROOT_DIR/scoring/seed_db/seed_db.py
