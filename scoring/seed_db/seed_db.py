@@ -111,20 +111,21 @@ def insert_games():
 
 def insert_player(username: str) -> Player:
     # The user should exist already in the DB.
-    user_obj = User.objects.get(username=username)
-
     try:
+        user_obj = User.objects.get(username=username)
         print("Inserting player into DB:", username)
         player_obj = Player.objects.create(user=user_obj)
     except IntegrityError as exc:
         if "unique constraint" in exc.args[0].lower():
-            print(f"Player already exists in DB: {username}")
+            print(f"  Player already exists in DB: {username}")
             player_obj = Player.objects.get(user__username=username)
+        else:
+            raise exc
     except Exception as exc:  # pylint: disable=broad-except
-        print(f"Error creating player: {exc}")
+        print(f"  Error creating player: {username} - {exc}")
         raise exc
-    else:
-        return player_obj
+
+    return player_obj
 
 
 def add_player_favorite_game(player_obj: Player, game_obj: Game) -> None:
@@ -132,6 +133,15 @@ def add_player_favorite_game(player_obj: Player, game_obj: Game) -> None:
         print(
             "Adding favorite game to player:", game_obj.name, player_obj.user.username
         )
+        # The .add opperation doesn't raise an exception if the relation
+        # already exists. So we check for the existence beforehand to
+        # get a cleaner output.
+        if player_obj.favorite_games.filter(name=game_obj.name).exists():
+            print(
+                "  Favorite game-player relationship already exists in DB: "
+                f"{game_obj}-{player_obj}"
+            )
+            return
         player_obj.favorite_games.add(game_obj)
     except Exception as exc:  # pylint: disable=broad-except
         print(f"  Error adding favorite game to player: {exc}")
@@ -146,54 +156,97 @@ def insert_players():
             add_player_favorite_game(player_obj, game_obj)
 
 
-def insert_tables():
-    for table_dict in tables:
-        try:
-            print("Inserting table into DB:", table_dict["name"])
-            table_obj = Table.objects.create(
-                name=table_dict["name"],
-                game=Game.objects.get(name=table_dict["game"]),
-            )
-        except Exception as exc:  # pylint: disable=broad-except
-            print(f"  Error creating table: {exc}")
+def insert_table(table_dict: dict) -> Table:
+    try:
+        table_str = f"{table_dict['id']} - {table_dict['start_date']} - {table_dict['game']} - {table_dict['players']}"
+        print(f"Inserting table into DB: {table_str}")
+        table_obj = Table.objects.create(
+            pk=table_dict["id"],
+            game=Game.objects.get(name=table_dict["game"]),
+            owner=User.objects.get(username=table_dict["owner"]),
+            winner=Player.objects.get(user__username=table_dict["winner"]),
+            start_date=table_dict["start_date"],
+            duration=table_dict["duration"],
+        )
+    except IntegrityError as exc:
+        if "unique constraint" in exc.args[0].lower():
+            print(f"  Player already exists in DB: {table_str}")
+            table_obj = Table.objects.get(pk=table_dict["id"])
+        else:
+            raise exc
+    except Exception as exc:  # pylint: disable=broad-except
+        print(f"  Error creating table: {exc}")
+        raise exc
 
-        for player_username in table_dict["players"]:
-            player_obj = Player.objects.get(user__username=player_username)
-            try:
-                print("Adding player to table:", player_username, table_dict["name"])
-                table_obj.players.add(player_obj)
-            except Exception as exc:  # pylint: disable=broad-except
-                print(f"  Error adding player to table: {exc}")
+    return table_obj
+
+
+def add_player_to_table(player_obj: Player, table_obj: Table) -> None:
+    try:
+        print("Adding player to table:", player_obj, table_obj)
+        # The .add opperation doesn't raise an exception if the relation
+        # already exists. So we check for the existence beforehand to
+        # get a cleaner output.
+        if table_obj.players.filter(user__username=player_obj.user.username).exists():
+            print(
+                "  Player-table relationship already exists in DB: "
+                f"{player_obj}-{table_obj}"
+            )
+            return
+        table_obj.players.add(player_obj)
+    except Exception as exc:  # pylint: disable=broad-except
+        print(f"  Error adding player to table: {exc}")
+        raise exc
+
+
+def insert_score(
+    table_obj: Table, player_obj: Player, sc_obj: ScoringCategory, value: int
+) -> None:
+    try:
+        print("Inserting score into DB:", table_obj, player_obj, sc_obj, value)
+        Score.objects.create(
+            table=table_obj,
+            player=player_obj,
+            scoring_category=sc_obj,
+            value=value,
+        )
+    except IntegrityError as exc:
+        if "unique constraint" in exc.args[0].lower():
+            print(
+                "  Score already exists in DB: "
+                f"{table_obj} - {player_obj} - {sc_obj} - {value}"
+            )
+        else:
+            raise exc
+    except Exception as exc:  # pylint: disable=broad-except
+        print(
+            f"  Error creating score: {table_obj} - {player_obj} - {sc_obj} - {value} -"
+            f" {exc}"
+        )
+        raise exc
+
+
+def insert_tables():
+    for table_dict in tables.values():
+        table_obj = insert_table(table_dict)
+
+        for username in table_dict["players"]:
+            player_obj = Player.objects.get(user__username=username)
+            add_player_to_table(player_obj, table_obj)
 
         for username, score_dict in table_dict["scores"].items():
             player_obj = Player.objects.get(user__username=username)
-            try:
-                print(
-                    "Inserting score into DB:", score_dict["player"], table_dict["name"]
+            for scoring_category_name, value in score_dict.items():
+                sc_obj = ScoringCategory.objects.get(
+                    game__name=table_obj.game, name=scoring_category_name
                 )
-                score_obj = Score.objects.create(
-                    player=player_obj,
-                    table=table_obj,
-                )
-            except Exception as exc:  # pylint: disable=broad-except
-                print(f"  Error creating score: {exc}")
-
-            for category_name, value in score_dict["scores"].items():
-                category_obj = ScoringCategory.objects.get(
-                    game=table_obj.game, name=category_name
-                )
-                try:
-                    print("Inserting score value into DB:", category_name, value)
-                    score_obj.scores.create(
-                        category=category_obj,
-                        value=value,
-                    )
-                except Exception as exc:  # pylint: disable=broad-except
-                    print(f"  Error creating score value: {exc}")
+                insert_score(table_obj, player_obj, sc_obj, value)
 
 
 try:
     insert_games()
+    insert_players()
+    insert_tables()
 except Exception as exc:  # pylint: disable=broad-except
     print(f"Aborted: {dir(exc)}")
     print(type(exc))
