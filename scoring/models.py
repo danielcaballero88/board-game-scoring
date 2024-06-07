@@ -70,7 +70,7 @@ class ScoringCategory(models.Model):
         - game (many to one): The game that the scoring category belongs to.
     """
 
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     game = models.ForeignKey(  # many-to-one relationship
         Game, on_delete=models.CASCADE, related_name="scoring_category_set"
