@@ -76,6 +76,15 @@ class ScoringCategory(models.Model):
         Game, on_delete=models.CASCADE, related_name="scoring_category_set"
     )
 
+    class Meta:
+        # Each game should have only one scoring category with the same name.
+        constraints = [
+            models.UniqueConstraint(
+                name="unique_scoring_category_name_per_game",
+                fields=["name", "game"],
+            )
+        ]
+
     def __str__(self):
         return self.name
 
