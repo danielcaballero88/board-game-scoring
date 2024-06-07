@@ -11,7 +11,8 @@ class PlayerInLine(admin.TabularInline):
 
 
 class AppUserAdmin(admin.ModelAdmin):
-    inlines = [PlayerInLine]
+    ...
+    # inlines = [PlayerInLine]
 
 
 admin.site.register(AppUser, AppUserAdmin)
