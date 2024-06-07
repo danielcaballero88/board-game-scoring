@@ -163,6 +163,16 @@ class Score(models.Model):
     scoring_category = models.ForeignKey(ScoringCategory, on_delete=models.PROTECT)
     value = models.IntegerField()
 
+    class Meta:
+        # Each player can only have one score for each scoring category
+        # in a table.
+        constraints = [
+            models.UniqueConstraint(
+                name="unique_player_scoring_category_table",
+                fields=["player", "scoring_category", "table"],
+            )
+        ]
+
     def save(self, *args, **kwargs):
         # Validate that the scoring category belongs to the same game
         # as the table game being played, otherwise it's wrong.
