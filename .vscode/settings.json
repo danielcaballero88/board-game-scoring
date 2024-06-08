@@ -17,6 +17,6 @@
     "editor.defaultFormatter": "monosans.djlint",
   },
   "djlint.configuration": "pyproject.toml",
-  "flake8.args": ["--config=./pyproject.toml"],
+  "flake8.args": ["--config=./.flake8"],
   "pylint.args": ["--rcfile=./.pylintrc"]
 }
