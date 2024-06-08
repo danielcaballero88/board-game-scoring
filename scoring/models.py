@@ -11,7 +11,7 @@ class Genre(models.Model):
     Attributes:
         - name: Genre name.
     Relationships:
-        - game_set (many to many)
+        - games (many to many)
     """
 
     name = models.CharField(max_length=50)
@@ -33,10 +33,10 @@ class Game(models.Model):
         - description: A description of the game.
         - image: A URL to an image of the game.
     Relationships:
-        - genre_set: (many to many): Genres that the game belongs to.
-        - scoring_category_set (one to many): A list of scoring
+        - genres: (many to many): Genres that the game belongs to.
+        - scoring_categories (one to many): A list of scoring
           categories that can be used to score the game.
-        - table_set (one to many): Tables that played this game.
+        - tables (one to many): Tables that played this game.
     """
 
     name = models.CharField(max_length=100, unique=True)
@@ -53,7 +53,7 @@ class Game(models.Model):
         ],
     )
     description = models.TextField(blank=True)
-    genres = models.ManyToManyField(Genre)
+    genres = models.ManyToManyField(Genre, related_name="games")
     image = models.URLField(blank=True)
 
     def __str__(self):
@@ -73,7 +73,7 @@ class ScoringCategory(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     game = models.ForeignKey(  # many-to-one relationship
-        Game, on_delete=models.CASCADE, related_name="scoring_category_set"
+        Game, on_delete=models.CASCADE, related_name="scoring_categories"
     )
 
     class Meta:
@@ -95,8 +95,8 @@ class Player(models.Model):
     Relationships:
         - user (one to one): Auth user object.
         - favorite_games (many to many)
-        - table_set (many to many)
-        - table_winner_set (one to many)
+        - tables (many to many)
+        - tables_won (one to many)
     """
 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
@@ -115,17 +115,17 @@ class Table(models.Model):
         - game (many to one): The game that the table is for.
         - owner (many to one): The user that created the table.
         - winner (many to one): The winning player.
-        - player_set (many to many): The players at the table, including
+        - players (many to many): The players at the table, including
           the owner and the winner.
-        - score_set (one to many): The scores for the table.
+        - scores (one to many): The scores for the table.
     """
 
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    players = models.ManyToManyField(Player)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="tables")
+    players = models.ManyToManyField(Player, related_name="tables")
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
     winner = models.ForeignKey(
         Player,
-        related_name="table_winner_set",
+        related_name="tables_won",
         on_delete=models.PROTECT,
         null=True,
         blank=True,
@@ -158,9 +158,11 @@ class Score(models.Model):
         the game that the table is for.
     """
 
-    table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.PROTECT)
-    scoring_category = models.ForeignKey(ScoringCategory, on_delete=models.PROTECT)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name="scores")
+    player = models.ForeignKey(Player, on_delete=models.PROTECT, related_name="scores")
+    scoring_category = models.ForeignKey(
+        ScoringCategory, on_delete=models.PROTECT, related_name="scores"
+    )
     value = models.IntegerField()
 
     class Meta:
@@ -182,6 +184,7 @@ class Score(models.Model):
 
     def __str__(self):
         return (
+            f"{self.table.pk} - "
             f"{self.table.game.name} - "
             f"{self.player.user.username} - "
             f"{self.scoring_category.name} - "

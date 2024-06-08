@@ -76,7 +76,7 @@ def add_genre_to_game(game_obj: Game, genre_obj: Genre) -> None:
 def insert_scoring_category(game_obj: Game, category_name: str) -> None:
     try:
         print("Inserting scoring category into DB:", category_name)
-        game_obj.scoring_category_set.create(name=category_name)
+        game_obj.scoring_categories.create(name=category_name)
     except IntegrityError as exc:
         if "unique constraint" in exc.args[0].lower():
             print(
@@ -158,7 +158,12 @@ def insert_players():
 
 def insert_table(table_dict: dict) -> Table:
     try:
-        table_str = f"{table_dict['id']} - {table_dict['start_date']} - {table_dict['game']} - {table_dict['players']}"
+        table_str = (
+            f"{table_dict['id']} - "
+            f"{table_dict['start_date']} - "
+            f"{table_dict['game']} - "
+            f"{table_dict['players']}"
+        )
         print(f"Inserting table into DB: {table_str}")
         table_obj = Table.objects.create(
             pk=table_dict["id"],
