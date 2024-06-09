@@ -35,7 +35,7 @@
                     <div class="col-1 d-flex justify-content-center align-items-center">
                       <div class="rounded-circle d-flex justify-content-center align-items-center">
                         <img class="rounded-circle m-0"
-                             src="{{ fav_game.img_src }}"
+                             src="{{ fav_game.image }}"
                              alt="Game image for {{ fav_game.name }}" />
                       </div>
                     </div>
@@ -44,7 +44,7 @@
                       <span class="game-description">{{ fav_game.description }}</span>
                     </div>
                     <div class="col-2 text-nowrap">
-                      <span>{{ fav_game.record.total_won }} / {{ fav_game.record.total_played }}</span>
+                      <span>{{ fav_game.record.won }} / {{ fav_game.record.played }}</span>
                     </div>
                   </div>
                 </li>
