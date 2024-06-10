@@ -13,7 +13,7 @@
   <div class="scoring-container">
     <div class="scoring-nav__container">
       <div class="scoring-nav__item header">
-        <a href="">
+        <a href="{% url "scoring:index" %}">
           <i class="bi bi-house scoring-nav__item-icon"></i>
           <span class="scoring-nav__brand">BGS</span></a>
         <div class="scoring-nav__toggle-btn">
@@ -22,10 +22,10 @@
       </div>
       <div class="scoring-nav__content">
         <div class="scoring-nav__item only-sm">
-          <a href=""><i class="bi bi-house scoring-nav__item-icon"></i><span>Home</span></a>
+          <a href="{% url "scoring:index" %}"><i class="bi bi-house scoring-nav__item-icon"></i><span>Home</span></a>
         </div>
         <div class="scoring-nav__item">
-          <a href=""><i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>All games</span></a>
+          <a href="{% url "scoring:games_list" %}"><i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>All games</span></a>
         </div>
         <hr />
         <div class="scoring-nav__item">

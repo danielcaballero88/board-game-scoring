@@ -1,0 +1,11 @@
+@media screen and (max-width: 768px){
+  .list-group-item img {
+    height: 30px;
+    width: 30px;
+    margin-right: 1rem;
+  }
+
+  .bi-plus-circle {
+    font-size: 1.2rem;
+  }
+}
