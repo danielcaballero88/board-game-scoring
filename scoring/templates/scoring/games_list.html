@@ -37,13 +37,16 @@
                     </div>
                     <div class="col d-flex flex-column justify-content-center">
                       <div class="actions w-100 d-flex flex-column justify-content-around flex-md-row justify-content-md-end">
-                        <div class="button like-button">
-                          {% if game.is_favorite %}
-                            <i class="bi bi-heart-fill"></i>
-                          {% else %}
-                            <i class="bi bi-heart"></i>
-                          {% endif %}
-                        </div>
+                        <form action="{% url "scoring:game_like" game.pk %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="button like-button">
+                            {% if game.is_favorite %}
+                              <i class="bi bi-heart-fill"></i>
+                            {% else %}
+                              <i class="bi bi-heart"></i>
+                            {% endif %}
+                          </button>
+                        </form>
                         <a href="" class="button action-button"><i class="bi bi-eye"></i></a>
                         <a href="" class="button action-button"><i class="bi bi-plus"></i></a>
                       </div>
@@ -57,18 +60,18 @@
       </div>
     </div>
   </div>
-  <script>
-    "use strict";
-    const likeButtons = document.querySelectorAll('.like-button');
-    likeButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        this.classList.toggle('liked');
-        // Select the icon element inside the button and remove the class `bi-heart`
-        // and add the class `bi-heart-fill`
-        const icon = this.querySelector('i');
-        icon.classList.toggle('bi-heart');
-        icon.classList.toggle('bi-heart-fill');
-      });
-    });
-  </script>
+  {% comment %} <script>
+   "use strict";
+   const likeButtons = document.querySelectorAll('.like-button');
+   likeButtons.forEach(button => {
+     button.addEventListener('click', function() {
+       this.classList.toggle('liked');
+       // Select the icon element inside the button and remove the class `bi-heart`
+       // and add the class `bi-heart-fill`
+       const icon = this.querySelector('i');
+       icon.classList.toggle('bi-heart');
+       icon.classList.toggle('bi-heart-fill');
+     });
+   });
+ </script> {% endcomment %}
 {% endblock content_scoring %}

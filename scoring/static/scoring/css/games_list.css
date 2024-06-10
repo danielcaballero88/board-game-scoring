@@ -30,8 +30,12 @@
   margin: 0.3rem;
 }
 
-.actions .btn i {
+.actions .button i {
   -webkit-text-stroke: 0.3px;
+}
+
+.actions .like-button {
+  border-width: 0;
 }
 
 @media screen and (max-width: 768px){

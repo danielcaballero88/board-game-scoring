@@ -41,5 +41,8 @@ class Player(models.Model):
     def get_tables(self) -> list[Table]:
         return self.tables.all()
 
+    def add_fav_game(self, game: Game):
+        self.favorite_games.add(game)
+
     def __str__(self):
         return f"{self.user.username}"
