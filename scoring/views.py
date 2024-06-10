@@ -26,4 +26,9 @@ def index(request: HttpRequest):
 @login_required(login_url="/accounts/login")
 def games_list(request: HttpRequest):
     games = Game.objects.all()
+    player = Player.get_by_username(request.user.username)
+    fav_games = player.get_favorite_games()
+    for game in games:
+        if game in fav_games:
+            game.is_favorite = True
     return render(request, "scoring/games_list.html", {"games": games})

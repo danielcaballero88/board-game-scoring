@@ -38,7 +38,11 @@
                     <div class="col d-flex flex-column justify-content-center">
                       <div class="actions w-100 d-flex flex-column justify-content-around flex-md-row justify-content-md-end">
                         <div class="button like-button">
-                          <i class="bi bi-heart"></i>
+                          {% if game.is_favorite %}
+                            <i class="bi bi-heart-fill"></i>
+                          {% else %}
+                            <i class="bi bi-heart"></i>
+                          {% endif %}
                         </div>
                         <a href="" class="button action-button"><i class="bi bi-eye"></i></a>
                         <a href="" class="button action-button"><i class="bi bi-plus"></i></a>
