@@ -45,7 +45,7 @@ def game_like(request: HttpRequest, game_pk: int):
     game = Game.objects.get(pk=game_pk)
     fav_games = player.get_favorite_games()
     if game in fav_games:
-        player.favorite_games.remove(game)
+        player.remove_fav_game(game)
     else:
         player.add_fav_game(game)
     return HttpResponseRedirect(reverse("scoring:games_list"))

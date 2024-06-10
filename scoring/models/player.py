@@ -44,5 +44,8 @@ class Player(models.Model):
     def add_fav_game(self, game: Game):
         self.favorite_games.add(game)
 
+    def remove_fav_game(self, game: Game):
+        self.favorite_games.remove(game)
+
     def __str__(self):
         return f"{self.user.username}"
