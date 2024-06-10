@@ -19,43 +19,27 @@
           <div class="card-header display-6 text-center">
             All games
           </div>
-          <div class="card-header table-header">
-            <div class="row">
-              <div class="col-md-1">
-                <!-- Col to leave a bit of space in the header for the image -->
-              </div>
-              <div class="col-8 col-md-6">
-                <span>Game</span>
-              </div>
-              <div class="col-2 col-md-3 text-nowrap">
-                <span>Complexity</span>
-              </div>
-              <div class="col-2">
-                <!-- This is the column for the actions -->
-              </div>
-            </div>
-          </div>
           <div class="card-body p-1">
             <ul class="list-group">
               {% for game in games %}
                 <li class="list-group-item">
                   <div class="row">
-                    <div class="col-1 d-flex justify-content-center align-items-center">
+                    <div class="col-2 d-flex justify-content-center align-items-center">
                       <div class="rounded-circle d-flex justify-content-center align-items-center">
                         <img class="rounded-circle m-0"
                              src="{{ game.image }}"
                              alt="Game image for {{ game.name }}" />
                       </div>
                     </div>
-                    <div class="col-8 col-md-6 d-flex flex-column justify-content-center">
+                    <div class="col-7 d-flex flex-column justify-content-center">
                       <span class="game-name">{{ game.name }}</span>
-                      <span class="game-description d-none d-md-block">{{ game.description }}</span>
+                      <span class="game-description">{{ game.description }}</span>
                     </div>
-                    <div class="col-2 col-md-3">
-                      <span>{{ game.complexity }}</span>
-                    </div>
-                    <div class="col-1 col-md-2 d-flex flex-column justify-content-center">
-                      <a href=""><i class="bi bi-plus-circle display-6"></i></a>
+                    <div class="col d-flex flex-column justify-content-center">
+                      <div class="actions w-100 d-flex flex-column justify-content-around flex-md-row justify-content-md-end">
+                        <a href="" class="btn"><i class="bi bi-eye"></i></a>
+                        <a href="" class="btn"><i class="bi bi-plus"></i></a>
+                      </div>
                     </div>
                   </div>
                 </li>

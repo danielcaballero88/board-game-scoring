@@ -1,11 +1,38 @@
+.list-group-item img {
+  height: 50px;
+  width: 50px;
+  margin-right: 1rem;
+}
+
+.list-group-item .game-name {
+  font-size: 1.2rem;
+}
+
+.list-group-item .game-description {
+  font-size: 0.8rem;
+}
+
+.actions .btn {
+  font-size: 1.2rem;
+  border-radius: 20px;
+  background-color: rgba(var(--primary-color), 0.8);
+  color: rgba(var(--secondary-color), 1);
+}
+
+.actions .btn:first-child {
+  margin-right: 0.2rem;
+}
+
+.actions .btn i {
+  -webkit-text-stroke: 0.3px;
+}
+
 @media screen and (max-width: 768px){
-  .list-group-item img {
-    height: 30px;
-    width: 30px;
-    margin-right: 1rem;
+  .list-group-item .game-description {
+    font-size: 0.6rem;
   }
 
-  .bi-plus-circle {
-    font-size: 1.2rem;
+  .actions .btn:first-child {
+    margin-bottom: 0.2rem;
   }
 }
