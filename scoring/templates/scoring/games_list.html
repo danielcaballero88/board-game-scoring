@@ -37,16 +37,16 @@
                     </div>
                     <div class="col-3 d-flex flex-column justify-content-center">
                       <div class="actions w-100 d-flex justify-content-around justify-content-md-end flex-wrap">
-                        <button type="submit" class="btn like-btn">
-                          <form action="{% url "scoring:game_like" game.pk %}" method="post">
-                            {% csrf_token %}
+                        <form action="{% url "scoring:game_like" game.pk %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="btn like-btn">
                             {% if game.is_favorite %}
                               <i class="bi bi-heart-fill"></i>
                             {% else %}
                               <i class="bi bi-heart"></i>
                             {% endif %}
-                          </form>
-                        </button>
+                          </button>
+                        </form>
                         <a href="" class="btn action-btn disabled"><i class="bi bi-eye"></i></a>
                         <a href="" class="btn action-btn disabled"><i class="bi bi-plus"></i></a>
                       </div>
