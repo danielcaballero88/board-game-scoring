@@ -1,0 +1,68 @@
+{% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/index.css' %}" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/table_create.css' %}" />
+{% endblock extrahead_scoring %}
+
+{% block content_scoring %}
+  <div class="container">
+    <div class="card">
+      <div class="card-header display-6 text-center">
+        Create new table for {{ game.name }}
+      </div>
+      <div class="card-body p-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-auto">
+              <img src="{{ game.image }}" alt="" />
+            </div>
+            <div class="col">
+              <p>
+                Copy the link and share it with friends, they can join and enter their scores and then the
+                winner will be calculated automatically.
+              </p>
+              <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       id="copyInput"
+                       value="{{ new_table_url }}"
+                       readonly />
+                <button class="btn btn-primary" type="button" id="copyBtn">
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const copyInput = document.getElementById('copyInput');
+    const copyBtn = document.getElementById('copyBtn');
+
+    copyBtn.addEventListener('click', () => {
+      // Select the input text
+      copyInput.select();
+      try {
+        // Copy the text to the clipboard
+        document.execCommand('copy');
+        // Show a success message (optional)
+        alert('Text copied to clipboard!');
+      } catch (err) {
+        // Show an error message (optional)
+        alert('Failed to copy text to clipboard');
+      }
+      // Deselect the input text
+      copyInput.blur();
+    });
+  </script>
+{% endblock content_scoring %}

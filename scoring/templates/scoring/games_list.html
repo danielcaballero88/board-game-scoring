@@ -48,7 +48,8 @@
                           </button>
                         </form>
                         <a href="" class="btn action-btn disabled"><i class="bi bi-eye"></i></a>
-                        <a href="" class="btn action-btn disabled"><i class="bi bi-plus"></i></a>
+                        <a href="{% url "scoring:table_create" game.pk %}"
+                           class="btn action-btn"><i class="bi bi-plus"></i></a>
                       </div>
                     </div>
                   </div>
