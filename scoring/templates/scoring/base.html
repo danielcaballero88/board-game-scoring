@@ -13,7 +13,7 @@
   <div class="scoring-container">
     <div class="scoring-nav__container">
       <div class="scoring-nav__item header">
-        <a href="{% url "scoring:index" %}">
+        <a href="{% url "scoring:index" %}" class="scoring-nav__link">
           <i class="bi bi-house scoring-nav__item-icon"></i>
           <span class="scoring-nav__brand">BGS</span></a>
         <div class="scoring-nav__toggle-btn">
@@ -22,21 +22,31 @@
       </div>
       <div class="scoring-nav__content">
         <div class="scoring-nav__item only-sm">
-          <a href="{% url "scoring:index" %}"><i class="bi bi-house scoring-nav__item-icon"></i><span>Home</span></a>
+          <a href="{% url "scoring:index" %}" class="scoring-nav__link">
+            <i class="bi bi-house scoring-nav__item-icon"></i><span>Home</span>
+          </a>
         </div>
         <div class="scoring-nav__item">
-          <a href="{% url "scoring:games_list" %}"><i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>All games</span></a>
+          <a href="{% url "scoring:games_list" %}" class="scoring-nav__link">
+            <i class="bi bi-dice-3 scoring-nav__item-icon"></i><span>All games</span>
+          </a>
         </div>
         <hr />
         <div class="scoring-nav__item">
-          <a href="{% url "scoring:tables_list" %}"><i class="bi bi-clock-history scoring-nav__item-icon"></i><span>Previous scores</span></a>
+          <a href="{% url "scoring:tables_list" %}" class="scoring-nav__link">
+            <i class="bi bi-clock-history scoring-nav__item-icon"></i><span>Previous scores</span>
+          </a>
         </div>
         <hr />
         <div class="scoring-nav__item filler">
         </div>
         <hr />
         <div class="scoring-nav__item">
-          <a href="{% url "accounts:logout" %}"><i class="bi bi-box-arrow-left scoring-nav__item-icon"></i><span>Sign out</span></a>
+          <div class="scoring-nav__link"
+               data-bs-toggle="modal"
+               data-bs-target="#logoutModal">
+            <i class="bi bi-box-arrow-left scoring-nav__item-icon"></i><span>Sign out</span>
+          </div>
         </div>
       </div>
     </div>
@@ -45,6 +55,41 @@
       {% endblock content_scoring %}
     </div>
   </div>
+
+  <div class="modal fade"
+       id="logoutModal"
+       tabindex="-1"
+       aria-labelledby="logoutModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="logoutModalLabel">
+            Logging out?
+          </h1>
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to log out?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Go back
+          </button>
+          <a href="{% url "accounts:logout" %}">
+            <button type="button" class="btn btn-primary">
+              Log out
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     "use strict";
     // Read from localStorage to get the status of the navbar (closed or open) when the document loads

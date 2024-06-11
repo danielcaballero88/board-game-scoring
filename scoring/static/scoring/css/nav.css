@@ -69,7 +69,7 @@
   margin-bottom: 0;
 }
 
-.scoring-nav__item a {
+.scoring-nav__item .scoring-nav__link {
   text-decoration: none;
   color: inherit;
 
@@ -80,9 +80,11 @@
   display: flex;
   justify-content: start;
   align-items: center;
+
+  cursor: pointer;
 }
 
-.scoring-nav__item a .scoring-nav__item-icon {
+.scoring-nav__item .scoring-nav__link .scoring-nav__item-icon {
   width: 40px;
   text-align: center;
 }
@@ -96,7 +98,7 @@
   margin: 0 0.5rem;
 }
 
-.scoring-nav__container.closed .scoring-nav__item a span {
+.scoring-nav__container.closed .scoring-nav__item .scoring-nav__link span {
   display: none;
 }
 
@@ -179,7 +181,7 @@
     display: none;
   }
 
-  .scoring-nav__item a {
+  .scoring-nav__item .scoring-nav__link {
     display: flex;
     justify-content: center;
     align-items: center;
