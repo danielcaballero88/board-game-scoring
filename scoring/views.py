@@ -47,3 +47,12 @@ def game_like(request: HttpRequest, game_pk: int):
     else:
         player.add_fav_game(game)
     return HttpResponseRedirect(reverse("scoring:games_list"))
+
+
+@login_required(login_url="/accounts/login")
+def tables_list(request: HttpRequest):
+    player = Player.get_by_username(request.user.username)
+    tables = player.get_tables()
+    return render(
+        request, "scoring/tables_list.html", {"tables": tables, "tables": tables}
+    )

@@ -1,0 +1,64 @@
+{% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/index.css' %}" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/tables_list.css' %}" />
+{% endblock extrahead_scoring %}
+
+{% block content_scoring %}
+  <div class="container h-100">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header display-6 text-center">
+            Your plays
+          </div>
+          <div class="card-body p-1">
+            <ul class="list-group">
+              {% for table in tables %}
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col d-flex justify-content-center align-items-center">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <img class="m-0"
+                             src="{{ table.game.image }}"
+                             alt="Game image for {{ table.name }}" />
+                      </div>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                      <span class="table-game">{{ table.game.name }}</span>
+                      <span class="table-date">{{ table.start_date }}</span>
+                    </div>
+                    <div class="col players-list d-flex flex-column justify-content-center">
+                      {% for player in table.players.all %}
+                        <span class="player-item">
+                          {% if table.winner == player %}
+                            <i class="bi bi-trophy"></i>
+                          {% else %}
+                            <i class="bi bi-person"></i>
+                          {% endif %}
+                          {{ player.user.username }}
+                        </span>
+                      {% endfor %}
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center">
+                      <div class="actions w-100 d-flex justify-content-around justify-content-md-end flex-wrap">
+                        <a href="" class="btn action-btn disabled"><i class="bi bi-eye"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content_scoring %}

@@ -1,0 +1,63 @@
+.list-group-item img {
+  height: auto;
+  max-height: 70px;
+  width: 50px;
+  margin-right: 1rem;
+}
+
+.list-group-item .table-game {
+  font-size: 1.2rem;
+}
+
+.list-group-item .table-date {
+  font-size: 0.8rem;
+}
+
+.list-group-item .players-list {
+  font-size: 0.6rem;
+}
+
+.actions .btn {
+  display: inline-block;
+  padding: 0.3rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.2rem;
+  border-radius: 20px;
+  background-color: rgba(var(--primary-color), 0.8);
+  color: rgba(var(--secondary-color), 1);
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0.3rem;
+}
+
+.actions .btn i {
+  -webkit-text-stroke: 0.3px;
+}
+
+.actions .like-btn,
+.actions .action-btn {
+  border-width: 0;
+}
+
+@media screen and (max-width: 768px){
+  .list-group-item .table-game {
+    font-size: 0.8rem;
+  }
+
+  .list-group-item .table-date {
+    font-size: 0.6rem;
+  }
+
+  .list-group-item .players-list {
+    font-size: 0.6rem;
+  }
+
+  .actions .btn:first-child {
+    margin-bottom: 0.2rem;
+  }
+}
