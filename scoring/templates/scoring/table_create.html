@@ -45,9 +45,30 @@
     </div>
   </div>
 
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast"
+         class="toast"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          URL coppied to clipboard
+        </div>
+        <button type="button"
+                class="btn-close me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close">
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const copyInput = document.getElementById('copyInput');
     const copyBtn = document.getElementById('copyBtn');
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 
     copyBtn.addEventListener('click', () => {
       // Select the input text
@@ -55,8 +76,8 @@
       try {
         // Copy the text to the clipboard
         document.execCommand('copy');
-        // Show a success message (optional)
-        alert('Text copied to clipboard!');
+        // Show a toast message
+        toastBootstrap.show()
       } catch (err) {
         // Show an error message (optional)
         alert('Failed to copy text to clipboard');
@@ -64,5 +85,17 @@
       // Deselect the input text
       copyInput.blur();
     });
+
+
+    {
+      %
+      comment %
+    }
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {})
+    } {
+      %
+      endcomment %
+    }
   </script>
 {% endblock content_scoring %}
