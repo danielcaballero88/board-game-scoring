@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 from .models import Game, Player
 
@@ -35,12 +36,9 @@ def games_list(request: HttpRequest):
     return render(request, "scoring/games_list.html", {"games": games})
 
 
+@require_http_methods(["POST"])
 @login_required(login_url="/accounts/login")
 def game_like(request: HttpRequest, game_pk: int):
-    print("game_like", game_pk)
-    if request.method != "POST":
-        return HttpResponseNotAllowed(["POST"])
-
     player = Player.get_by_username(request.user.username)
     game = Game.objects.get(pk=game_pk)
     fav_games = player.get_favorite_games()
