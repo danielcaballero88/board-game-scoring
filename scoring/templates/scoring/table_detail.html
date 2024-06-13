@@ -1,0 +1,49 @@
+{% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/game_detail.css' %}" />
+{% endblock extrahead_scoring %}
+
+{% block content_scoring %}
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+            <img class="m-0"
+                 src="{{ table.game.image }}"
+                 alt="Game image for {{ table.game.name }}" />
+          </div>
+          <div class="col-10">
+            <h1>
+              {{ table.game.name }}
+            </h1>
+            <p>
+              {{ table.start_date }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>
+            Owner: {{ table.owner }}
+          </li>
+          <li>
+            Players: {{ table_players }}
+          </li>
+          <li>
+            Winner: {{ table.winner }}
+          </li>
+          <li>
+            Duration (minutes): {{ table.duration }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock content_scoring %}

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from .models import Game, Player
+from .models import Game, Player, Table
 
 
 @login_required(login_url="/accounts/login")
@@ -75,3 +75,11 @@ def game_detail(request: HttpRequest, game_pk: int):
     game_genres = ", ".join([genre.name for genre in game.genres.all()])
     context = {"game": game, "game_genres": game_genres}
     return render(request, "scoring/game_detail.html", context)
+
+
+@login_required(login_url="/accounts/login")
+def table_detail(request: HttpRequest, table_pk: int):
+    table = Table.objects.get(pk=table_pk)
+    table_players = ", ".join([player.user.username for player in table.players.all()])
+    context = {"table": table, "table_players": table_players}
+    return render(request, "scoring/table_detail.html", context)

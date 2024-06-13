@@ -49,7 +49,8 @@
                     </div>
                     <div class="col d-flex flex-column justify-content-center">
                       <div class="actions w-100 d-flex justify-content-around justify-content-md-end flex-wrap">
-                        <a href="" class="btn action-btn disabled"><i class="bi bi-eye"></i></a>
+                        <a href="{% url "scoring:table_detail" table.pk %}"
+                           class="btn action-btn"><i class="bi bi-eye"></i></a>
                       </div>
                     </div>
                   </div>
