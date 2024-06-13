@@ -149,6 +149,8 @@ tables = {
         "game": "Catan",
         "players": ["admin", "player3", "player2"],
         "owner": "admin",
+        # TODO: Remove winners form here, it's redundant and prone to
+        # error because the winner should be calculated from the scores.
         "winner": "player2",
         "start_date": "2021-10-02",
         "duration": 70,  # minutes
