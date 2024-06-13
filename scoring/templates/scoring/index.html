@@ -61,10 +61,12 @@
           </div>
           <div class="card-header table-header">
             <div class="row">
+              <div class="col-1">
+              </div>
               <div class="col-4">
                 <span>Game</span>
               </div>
-              <div class="col-4">
+              <div class="col-3">
                 <span>Date</span>
               </div>
               <div class="col-4">
@@ -77,13 +79,20 @@
               {% for score in previous_scores %}
                 <li class="list-group-item">
                   <div class="row">
-                    <div class="col-4">
-                      {{ score.game }}
+                    <div class="col-1 d-flex justify-content-center align-items-center">
+                      <div class="rounded-circle d-flex justify-content-center align-items-center">
+                        <img class="rounded-circle m-0"
+                             src="{{ score.game.image }}"
+                             alt="Game image for {{ score.game.name }}" />
+                      </div>
                     </div>
-                    <div class="col-4">
-                      {{ score.date }}
+                    <div class="col-4 score-game-name">
+                      {{ score.game.name }}
                     </div>
-                    <div class="col-4">
+                    <div class="col-3 score-date">
+                      {{ score.start_date }}
+                    </div>
+                    <div class="col-4 score-winner">
                       {{ score.winner }}
                     </div>
                   </div>

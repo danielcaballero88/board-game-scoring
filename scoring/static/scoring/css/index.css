@@ -42,6 +42,11 @@
   color: rgba(var(--text-color), 0.7);
 }
 
+.score-date,
+.score-winner {
+  font-size: 0.8rem
+}
+
 @media screen and (max-width: 768px) {
   .card:first-child {
     margin-top: .5rem;
