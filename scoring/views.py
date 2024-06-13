@@ -67,3 +67,11 @@ def table_create(request: HttpRequest, game_pk: int):
     context = {"game": game, "new_table_url": new_table_url}
 
     return render(request, "scoring/table_create.html", context)
+
+
+@login_required(login_url="/accounts/login")
+def game_detail(request: HttpRequest, game_pk: int):
+    game = Game.objects.get(pk=game_pk)
+    game_genres = ", ".join([genre.name for genre in game.genres.all()])
+    context = {"game": game, "game_genres": game_genres}
+    return render(request, "scoring/game_detail.html", context)

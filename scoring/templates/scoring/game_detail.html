@@ -1,0 +1,49 @@
+{% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/game_detail.css' %}" />
+{% endblock extrahead_scoring %}
+
+{% block content_scoring %}
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+            <img class="m-0"
+                 src="{{ game.image }}"
+                 alt="Game image for {{ game.name }}" />
+          </div>
+          <div class="col-10">
+            <h1>
+              {{ game.name }}
+            </h1>
+            <p>
+              {{ game.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>
+            Num. players: {{ game.min_players }} - {{ game.max_players }}
+          </li>
+          <li>
+            Playtime (minutes): {{ game.min_playtime }} - {{ game.max_playtime }}
+          </li>
+          <li>
+            Complexity (1-5): {{ game.complexity }}
+          </li>
+          <li>
+            Genres: {{ game_genres }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock content_scoring %}
