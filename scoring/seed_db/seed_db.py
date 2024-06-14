@@ -4,12 +4,14 @@ Usage:
 $ python manage.py shell < $PATH_TO_THIS_SCRIPT
 """
 
+import itertools
+
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 
 # It's important to use absolute imports because this will be run as a
 # script from root directory from inside Django shell.
-from scoring.models import Game, Genre, Player, Score, ScoringCategory, Table
+from scoring.models import Game, Genre, OTPlayer, Player, Score, ScoringCategory, Table
 from scoring.seed_db.data import games, players, tables
 
 User = get_user_model()
@@ -165,7 +167,13 @@ def insert_table(table_dict: dict) -> Table:
             f"{table_dict['players']}"
         )
         print(f"Inserting table into DB: {table_str}")
-        totals = {k: sum(v.values()) for (k, v) in table_dict["scores"].items()}
+        totals = {
+            k: sum(v.values())
+            for (k, v) in itertools.chain(
+                table_dict["scores"]["players"].items(),
+                table_dict["scores"]["ot_players"].items(),
+            )
+        }
         winner = max(totals, key=totals.get)
         table_obj = Table.objects.create(
             pk=table_dict["id"],
@@ -210,22 +218,37 @@ def create_ot_player(ot_player_name: str, table_obj: Table) -> None:
     try:
         print("Adding one-time player to table:", ot_player_name, table_obj)
         table_obj.ot_players.create(name=ot_player_name)
+    except IntegrityError as exc:
+        if "unique constraint" in exc.args[0].lower():
+            print(
+                "  One-time player already exists in DB: "
+                f"{ot_player_name} - {table_obj}"
+            )
+        else:
+            raise exc
     except Exception as exc:  # pylint: disable=broad-except
         print(f"  Error creating one-time player at table: {exc}")
         raise exc
 
 
 def insert_score(
-    table_obj: Table, player_obj: Player, sc_obj: ScoringCategory, value: int
+    table_obj: Table, player_obj: Player | OTPlayer, sc_obj: ScoringCategory, value: int
 ) -> None:
     try:
         print("Inserting score into DB:", table_obj, player_obj, sc_obj, value)
-        Score.objects.create(
-            table=table_obj,
-            player=player_obj,
-            scoring_category=sc_obj,
-            value=value,
-        )
+        score_dict = {
+            "table": table_obj,
+            "scoring_category": sc_obj,
+            "value": value,
+        }
+        if isinstance(player_obj, Player):
+            score_dict["player"] = player_obj
+        elif isinstance(player_obj, OTPlayer):
+            score_dict["ot_player"] = player_obj
+        else:
+            raise ValueError(f"Invalid player type: {player_obj}")
+
+        Score.objects.create(**score_dict)
     except IntegrityError as exc:
         if "unique constraint" in exc.args[0].lower():
             print(
@@ -253,13 +276,21 @@ def insert_tables():
         for ot_player_name in table_dict["ot_players"]:
             create_ot_player(ot_player_name, table_obj)
 
-        for username, score_dict in table_dict["scores"].items():
+        for username, score_dict in table_dict["scores"]["players"].items():
             player_obj = Player.objects.get(user__username=username)
             for scoring_category_name, value in score_dict.items():
                 sc_obj = ScoringCategory.objects.get(
                     game__name=table_obj.game, name=scoring_category_name
                 )
                 insert_score(table_obj, player_obj, sc_obj, value)
+
+        for name, score_dict in table_dict["scores"]["ot_players"].items():
+            ot_player_obj = table_obj.ot_players.get(name=name)
+            for scoring_category_name, value in score_dict.items():
+                sc_obj = ScoringCategory.objects.get(
+                    game__name=table_obj.game, name=scoring_category_name
+                )
+                insert_score(table_obj, ot_player_obj, sc_obj, value)
 
 
 try:
