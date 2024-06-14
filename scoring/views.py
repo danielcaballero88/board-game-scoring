@@ -1,10 +1,12 @@
+from typing import cast
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from .models import Game, Player, Table
+from .models import Game, Player, Score, Table
 
 
 @login_required(login_url="/accounts/login")
@@ -83,11 +85,11 @@ def table_detail(request: HttpRequest, table_pk: int):
     table_players = table.players.all()
     table_players_str = ", ".join([player.user.username for player in table_players])
     # Parse scores
-    table_scores = table.scores.all()
+    table_scores = cast(list[Score], table.scores.all())
     table_scores_parsed = {}
     table_scores_totals = {}
     for table_score in table_scores:
-        username = table_score.player.user.username
+        username = table_score.get_player_name()
         category = table_score.scoring_category.name
         value = table_score.value
         if username not in table_scores_parsed:

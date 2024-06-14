@@ -63,6 +63,9 @@ class Score(models.Model):
         self.validate_game_is_table_game()
         self.validate_player_or_ot_player()
 
+    def get_player_name(self):
+        return self.player.user.username if self.player else self.ot_player.name
+
     def validate_game_is_table_game(self):
         """Check that the scoring category belongs to the same game as the table."""
         if self.scoring_category.game != self.table.game:
