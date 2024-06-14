@@ -165,11 +165,13 @@ def insert_table(table_dict: dict) -> Table:
             f"{table_dict['players']}"
         )
         print(f"Inserting table into DB: {table_str}")
+        totals = {k: sum(v.values()) for (k, v) in table_dict["scores"].items()}
+        winner = max(totals, key=totals.get)
         table_obj = Table.objects.create(
             pk=table_dict["id"],
             game=Game.objects.get(name=table_dict["game"]),
             owner=User.objects.get(username=table_dict["owner"]),
-            winner=Player.objects.get(user__username=table_dict["winner"]),
+            winner=Player.objects.get(user__username=winner),
             start_date=table_dict["start_date"],
             duration=table_dict["duration"],
         )
@@ -201,6 +203,15 @@ def add_player_to_table(player_obj: Player, table_obj: Table) -> None:
         table_obj.players.add(player_obj)
     except Exception as exc:  # pylint: disable=broad-except
         print(f"  Error adding player to table: {exc}")
+        raise exc
+
+
+def create_ot_player(ot_player_name: str, table_obj: Table) -> None:
+    try:
+        print("Adding one-time player to table:", ot_player_name, table_obj)
+        table_obj.ot_players.create(name=ot_player_name)
+    except Exception as exc:  # pylint: disable=broad-except
+        print(f"  Error creating one-time player at table: {exc}")
         raise exc
 
 
@@ -238,6 +249,9 @@ def insert_tables():
         for username in table_dict["players"]:
             player_obj = Player.objects.get(user__username=username)
             add_player_to_table(player_obj, table_obj)
+
+        for ot_player_name in table_dict["ot_players"]:
+            create_ot_player(ot_player_name, table_obj)
 
         for username, score_dict in table_dict["scores"].items():
             player_obj = Player.objects.get(user__username=username)

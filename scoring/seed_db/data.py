@@ -84,7 +84,6 @@ tables = {
         "game": "Agricola",
         "players": ["admin", "player1", "player2"],
         "owner": "admin",
-        "winner": "admin",
         "start_date": "2021-10-01",
         "duration": 90,  # minutes
         "scores": {
@@ -148,33 +147,42 @@ tables = {
         "id": 2,
         "game": "Catan",
         "players": ["admin", "player3", "player2"],
+        "ot_players": ["ot_player_1"],  # one time players
         "owner": "admin",
-        # TODO: Remove winners form here, it's redundant and prone to
-        # error because the winner should be calculated from the scores.
-        "winner": "player2",
         "start_date": "2021-10-02",
         "duration": 70,  # minutes
         "scores": {
-            "admin": {
-                "Towns": 4,
-                "Cities": 2,
-                "Longest road": 0,
-                "Largest army": 2,
-                "Victory points": 8,
+            "players": {
+                "admin": {
+                    "Towns": 4,
+                    "Cities": 2,
+                    "Longest road": 0,
+                    "Largest army": 2,
+                    "Victory points": 8,
+                },
+                "player3": {
+                    "Towns": 3,
+                    "Cities": 2,
+                    "Longest road": 0,
+                    "Largest army": 0,
+                    "Victory points": 5,
+                },
+                "player2": {
+                    "Towns": 4,
+                    "Cities": 2,
+                    "Longest road": 2,
+                    "Largest army": 0,
+                    "Victory points": 3,
+                },
             },
-            "player3": {
-                "Towns": 3,
-                "Cities": 2,
-                "Longest road": 0,
-                "Largest army": 0,
-                "Victory points": 5,
-            },
-            "player2": {
-                "Towns": 4,
-                "Cities": 2,
-                "Longest road": 2,
-                "Largest army": 0,
-                "Victory points": 3,
+            "one_time_players": {
+                "ot_player_1": {
+                    "Towns": 2,
+                    "Cities": 2,
+                    "Longest road": 0,
+                    "Largest army": 0,
+                    "Victory points": 3,
+                },
             },
         },
     },

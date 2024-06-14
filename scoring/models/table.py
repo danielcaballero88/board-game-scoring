@@ -19,6 +19,7 @@ class Table(models.Model):
         - winner (many to one): The winning player.
         - players (many to many): The players at the table, including
           the owner and the winner.
+        - ot_players (one to many): The one-time players at the table.
         - scores (one to many): The scores for the table.
     """
 
@@ -37,9 +38,18 @@ class Table(models.Model):
         "Duration in minutes", null=True, blank=True, validators=[MinValueValidator(0)]
     )
 
+    def save(self):
+        self.validate_unique_names()
+
+    def validate_unique_names(self):
+        names = [player.username.name for player in self.players.all()]
+        names += [player.name for player in self.ot_players.all()]
+        if len(names) != len(set(names)):
+            raise ValueError("Players must have unique names.")
+
     def __str__(self):
         return (
             f"{self.game.name} - "
             f"{self.start_date} - "
-            f"{[player.user.username for player in self.players.all()]}"
+            f"owner: {self.owner.username}"
         )
