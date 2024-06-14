@@ -53,6 +53,10 @@ class Score(models.Model):
                 name="unique_player_scoring_category_table",
                 fields=["player", "scoring_category", "table"],
             ),
+            models.UniqueConstraint(
+                name="unique_ot_player_scoring_category_table",
+                fields=["ot_player", "scoring_category", "table"],
+            ),
         ]
 
     def clean(self):
