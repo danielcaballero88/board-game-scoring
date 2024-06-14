@@ -38,12 +38,13 @@ class Table(models.Model):
         "Duration in minutes", null=True, blank=True, validators=[MinValueValidator(0)]
     )
 
-    def save(self):
+    def clean(self):
         self.validate_unique_names()
 
     def validate_unique_names(self):
-        names = [player.username.name for player in self.players.all()]
-        names += [player.name for player in self.ot_players.all()]
+        player_names = [player.user.username for player in self.players.all()]
+        ot_player_names = [player.name for player in self.ot_players.all()]
+        names = player_names + ot_player_names
         if len(names) != len(set(names)):
             raise ValueError("Players must have unique names.")
 
