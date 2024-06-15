@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator
 from django.db import models
 
 from .game import Game
@@ -10,6 +9,24 @@ User = get_user_model()
 
 class Table(models.Model):
     """Model representing a table (an instance of a game).
+
+    A table can be created by a user and they can then share a link with
+    other users and also with non-users. Users will be added as
+    `players` and non-users as `ot_players`.
+    TODO: maybe I can unify players by automatically registering
+    non-users with the username they provide. Not sure if it's the best
+    approach because it requires that the username be unique, so it may
+    take longer for one-time players to enter a score, which would be
+    bad ux.
+
+    After creation a table has status `open` and admits new players
+    which got the link to submit new scores for it. The owner can close
+    the table at any time. They can see the players that have already
+    submitted scores so they should know when everybody has done their
+    part.
+
+    When the owner closes the table, the winner is calculated and the
+    table is marked as `closed`.
 
     Attributes:
         - name: The name of the table.
@@ -24,8 +41,14 @@ class Table(models.Model):
     """
 
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="tables")
-    players = models.ManyToManyField(Player, related_name="tables")
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
+    status = models.CharField(
+        max_length=10,
+        choices=[("open", "Open"), ("closed", "Closed")],
+        default="open",
+    )
+    start_date = models.DateField()
+    players = models.ManyToManyField(Player, related_name="tables")
     winner = models.ForeignKey(
         Player,
         related_name="tables_won",
@@ -33,10 +56,10 @@ class Table(models.Model):
         null=True,
         blank=True,
     )
-    start_date = models.DateField()
-    duration = models.IntegerField(
-        "Duration in minutes", null=True, blank=True, validators=[MinValueValidator(0)]
-    )
+
+    def close(self):
+        self.status = "closed"
+        self.save()
 
     def clean(self):
         self.validate_unique_names()
