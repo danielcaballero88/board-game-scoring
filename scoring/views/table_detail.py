@@ -23,7 +23,7 @@ def table_detail(request: HttpRequest, table_pk: int):
             sc = score.scoring_category
             value = score.value
             table_scores_parsed[name][sc] = value
-        table_scores_totals[name] += value
+            table_scores_totals[name] += value
     # Calculate winner
     context = {
         "table": table,
