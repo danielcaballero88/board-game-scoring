@@ -170,7 +170,6 @@ def insert_table(table_dict: dict) -> Table:
             game=Game.objects.get(name=table_dict["game"]),
             owner=User.objects.get(username=table_dict["owner"]),
             start_date=table_dict["start_date"],
-            duration=table_dict["duration"],
         )
     except IntegrityError as exc:
         if "unique constraint" in exc.args[0].lower():
@@ -244,6 +243,17 @@ def insert_score(
                 "  Score already exists in DB: "
                 f"{table_obj} - {player_obj} - {sc_obj} - {value}"
             )
+            print("  Updating score value")
+            if isinstance(player_obj, Player):
+                score_obj = Score.objects.get(
+                    table=table_obj, player=player_obj, scoring_category=sc_obj
+                )
+            elif isinstance(player_obj, OTPlayer):
+                score_obj = Score.objects.get(
+                    table=table_obj, ot_player=player_obj, scoring_category=sc_obj
+                )
+            score_obj.value = value
+            score_obj.save()
         else:
             raise exc
     except Exception as exc:  # pylint: disable=broad-except
@@ -283,8 +293,8 @@ def insert_tables():
 
         if table_dict["closed"]:
             print("  Closing table:", table_obj)
-            print("    Table winner:", table_obj.winner)
             table_obj.close()
+            print("    Table winner:", table_obj.winner)
 
 
 try:

@@ -90,7 +90,7 @@ tables = {
         "scores": {
             "players": {
                 "admin": {
-                    "Victory points": 30,
+                    "Victory points": 0,
                     "Resources": 20,
                     "Buildings": 10,
                     "Fields": 5,
