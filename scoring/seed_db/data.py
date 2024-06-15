@@ -82,8 +82,6 @@ tables = {
         # idempotent.
         "id": 1,
         "game": "Agricola",
-        "players": ["admin", "player1", "player2"],
-        "ot_players": [],  # one time players
         "owner": "admin",
         "start_date": "2021-10-01",
         "closed": True,
@@ -150,8 +148,6 @@ tables = {
         # idempotent.
         "id": 2,
         "game": "Catan",
-        "players": ["admin", "player3", "player2"],
-        "ot_players": ["ot_player_1"],  # one time players
         "owner": "admin",
         "start_date": "2021-10-02",
         "closed": True,
@@ -196,8 +192,6 @@ tables = {
         # idempotent.
         "id": 3,
         "game": "Catan",
-        "players": ["admin", "player1"],
-        "ot_players": ["ot_player_x"],  # one time players
         "owner": "admin",
         "start_date": "2021-10-03",
         "closed": False,

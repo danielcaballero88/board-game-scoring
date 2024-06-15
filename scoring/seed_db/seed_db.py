@@ -162,7 +162,7 @@ def insert_table(table_dict: dict) -> Table:
             f"{table_dict['id']} - "
             f"{table_dict['start_date']} - "
             f"{table_dict['game']} - "
-            f"{table_dict['players']}"
+            f"{table_dict['scores']['players']}"
         )
         print(f"Inserting table into DB: {table_str}")
         table_obj = Table.objects.create(
@@ -223,7 +223,7 @@ def insert_score(
     table_obj: Table, player_obj: Player | OTPlayer, sc_obj: ScoringCategory, value: int
 ) -> None:
     try:
-        print("Inserting score into DB:", table_obj, player_obj, sc_obj, value)
+        print("  Inserting score into DB:", table_obj, player_obj, sc_obj, value)
         score_dict = {
             "table": table_obj,
             "scoring_category": sc_obj,
@@ -240,10 +240,10 @@ def insert_score(
     except IntegrityError as exc:
         if "unique constraint" in exc.args[0].lower():
             print(
-                "  Score already exists in DB: "
+                "    Score already exists in DB: "
                 f"{table_obj} - {player_obj} - {sc_obj} - {value}"
             )
-            print("  Updating score value")
+            print("    Updating score value")
             if isinstance(player_obj, Player):
                 score_obj = Score.objects.get(
                     table=table_obj, player=player_obj, scoring_category=sc_obj
@@ -258,8 +258,8 @@ def insert_score(
             raise exc
     except Exception as exc:  # pylint: disable=broad-except
         print(
-            f"  Error creating score: {table_obj} - {player_obj} - {sc_obj} - {value} -"
-            f" {exc}"
+            f"    Error creating score: {table_obj} - {player_obj} - {sc_obj} -"
+            f" {value} - {exc}"
         )
         raise exc
 
@@ -268,11 +268,11 @@ def insert_tables():
     for table_dict in tables.values():
         table_obj = insert_table(table_dict)
 
-        for username in table_dict["players"]:
+        for username in table_dict["scores"]["players"]:
             player_obj = Player.objects.get(user__username=username)
             add_player_to_table(player_obj, table_obj)
 
-        for ot_player_name in table_dict["ot_players"]:
+        for ot_player_name in table_dict["scores"]["ot_players"]:
             create_ot_player(ot_player_name, table_obj)
 
         for username, score_dict in table_dict["scores"]["players"].items():
