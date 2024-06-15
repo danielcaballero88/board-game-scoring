@@ -21,7 +21,6 @@ class Player(models.Model):
         - user (one to one): Auth user object.
         - favorite_games (many to many)
         - tables (many to many)
-        - tables_won (one to many)
     """
 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
@@ -42,9 +41,19 @@ class Player(models.Model):
         return self.scores.filter(table=table)
 
     def get_record(self, game: Game) -> dict[str, int]:
-        won = self.tables_won.filter(game=game).count()
-        played = self.tables.filter(game=game).count()
-        return {"won": won, "played": played}
+        tables_game = self.tables.filter(game=game)
+        tables_played_count = tables_game.count()
+        # TODO: This can be optimized by using a query, but to do that
+        # I need to have a field `winner` in the table. The problem now
+        # is that the winner could be either a Player or an OTPlayer.
+        # So I need to implement a relation manually by storing two
+        # values, one for the type of player and one for the id.
+        # Doable but I don't want to spend time on it now.
+        tables_won_count = 0
+        for table in tables_game:
+            if table.winner == self:
+                tables_won_count += 1
+        return {"won": tables_won_count, "played": tables_played_count}
 
     def get_tables(self) -> list[Table]:
         return self.tables.all()
