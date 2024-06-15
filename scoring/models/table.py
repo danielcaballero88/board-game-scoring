@@ -54,6 +54,7 @@ class Table(models.Model):
 
     def close(self):
         self.status = "closed"
+        self.save()
 
     @property
     def winner(self):
