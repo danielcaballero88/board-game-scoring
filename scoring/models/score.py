@@ -37,6 +37,7 @@ class Score(models.Model):
     ot_player = models.ForeignKey(
         OTPlayer,
         on_delete=models.PROTECT,
+        related_name="scores",
         null=True,
         blank=True,
     )
