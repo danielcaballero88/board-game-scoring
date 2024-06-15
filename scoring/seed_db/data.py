@@ -86,7 +86,7 @@ tables = {
         "ot_players": [],  # one time players
         "owner": "admin",
         "start_date": "2021-10-01",
-        "duration": 90,  # minutes
+        "closed": True,
         "scores": {
             "players": {
                 "admin": {
@@ -154,7 +154,7 @@ tables = {
         "ot_players": ["ot_player_1"],  # one time players
         "owner": "admin",
         "start_date": "2021-10-02",
-        "duration": 70,  # minutes
+        "closed": True,
         "scores": {
             "players": {
                 "admin": {
@@ -188,6 +188,30 @@ tables = {
                     "Victory points": 3,
                 },
             },
+        },
+    },
+    "table_3": {
+        # Unlike other models, different tables can be created with the
+        # same set of values, so I set an id to make the seed_db script
+        # idempotent.
+        "id": 3,
+        "game": "Catan",
+        "players": ["admin", "player1"],
+        "ot_players": ["ot_player_x"],  # one time players
+        "owner": "admin",
+        "start_date": "2021-10-03",
+        "closed": False,
+        "scores": {
+            "players": {
+                "admin": {
+                    "Towns": 4,
+                    "Cities": 2,
+                    "Longest road": 0,
+                    "Largest army": 2,
+                    "Victory points": 2,
+                },
+            },
+            "ot_players": {},
         },
     },
 }

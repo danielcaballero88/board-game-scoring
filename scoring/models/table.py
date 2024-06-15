@@ -1,3 +1,5 @@
+import itertools
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -49,17 +51,23 @@ class Table(models.Model):
     )
     start_date = models.DateField()
     players = models.ManyToManyField(Player, related_name="tables")
-    winner = models.ForeignKey(
-        Player,
-        related_name="tables_won",
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-    )
 
     def close(self):
         self.status = "closed"
-        self.save()
+
+    @property
+    def winner(self):
+        if self.status != "closed":
+            return None
+        winner = None
+        winner_total_score = -9999
+        for player in itertools.chain(self.players.all(), self.ot_players.all()):
+            player_scores = player.scores.filter(table=self)
+            player_total_score = sum(player_scores.values_list("value", flat=True))
+            if winner is None or player_total_score > winner_total_score:
+                winner = player
+                winner_total_score = player_total_score
+        return winner
 
     def clean(self):
         self.validate_unique_names()

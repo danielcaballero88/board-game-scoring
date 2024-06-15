@@ -4,8 +4,6 @@ Usage:
 $ python manage.py shell < $PATH_TO_THIS_SCRIPT
 """
 
-import itertools
-
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 
@@ -167,19 +165,10 @@ def insert_table(table_dict: dict) -> Table:
             f"{table_dict['players']}"
         )
         print(f"Inserting table into DB: {table_str}")
-        totals = {
-            k: sum(v.values())
-            for (k, v) in itertools.chain(
-                table_dict["scores"]["players"].items(),
-                table_dict["scores"]["ot_players"].items(),
-            )
-        }
-        winner = max(totals, key=totals.get)
         table_obj = Table.objects.create(
             pk=table_dict["id"],
             game=Game.objects.get(name=table_dict["game"]),
             owner=User.objects.get(username=table_dict["owner"]),
-            winner=Player.objects.get(user__username=winner),
             start_date=table_dict["start_date"],
             duration=table_dict["duration"],
         )
@@ -291,6 +280,11 @@ def insert_tables():
                     game__name=table_obj.game, name=scoring_category_name
                 )
                 insert_score(table_obj, ot_player_obj, sc_obj, value)
+
+        if table_dict["closed"]:
+            print("  Closing table:", table_obj)
+            print("    Table winner:", table_obj.winner)
+            table_obj.close()
 
 
 try:
