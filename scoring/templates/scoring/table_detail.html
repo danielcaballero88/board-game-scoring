@@ -6,7 +6,7 @@
 {% block extrahead_scoring %}
   <link rel="stylesheet"
         type="text/css"
-        href="{% static 'scoring/css/game_detail.css' %}" />
+        href="{% static 'scoring/css/table_detail.css' %}" />
 {% endblock extrahead_scoring %}
 
 {% block content_scoring %}
@@ -44,6 +44,20 @@
             Status: {{ table.status }}
           </li>
         </ul>
+        {% if table.status == "open" %}
+          Invite players:
+          <div class="input-group">
+            <input type="text"
+                   class="form-control"
+                   id="copyInput"
+                   value="TBD: url to join table"
+                   readonly
+                   onmousedown="return false;" />
+            <button class="btn btn-primary" type="button" id="copyBtn">
+              Copy
+            </button>
+          </div>
+        {% endif %}
       </div>
     </div>
     <div class="card mt-3">
@@ -58,11 +72,16 @@
             {% for username, score in scores.items %}
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="card mb-3">
-                  <div class="card-header">
-                    {% if winner.name == username %}
-                      <i class="bi bi-trophy"></i>
-                    {% endif %}
-                    {{ username }} (total: {{ scores_totals|get_item:username }})
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>
+                      {% if winner.name == username %}
+                        <i class="bi bi-trophy"></i>
+                      {% endif %}
+                      {{ username }} (total: {{ scores_totals|get_item:username }})
+                    </span>
+                    <div class="btn btn-primary">
+                      <i class="bi bi-pencil"></i>
+                    </div>
                   </div>
                   <div class="card-body">
                     <ul>
@@ -76,9 +95,71 @@
                 </div>
               </div>
             {% endfor %}
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <span>
+                    Add player
+                  </span>
+                  <div class="btn btn-primary">
+                    <i class="bi bi-person-plus"></i>
+                  </div>
+                </div>
+                <div class="card-body add-player-msg">
+                  As owner of the table, you can add the score for another player yourself.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast"
+         class="toast"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          URL coppied to clipboard
+        </div>
+        <button type="button"
+                class="btn-close me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const copyInput = document.getElementById('copyInput');
+    const copyBtn = document.getElementById('copyBtn');
+    const toastLiveExample = document.getElementById('liveToast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+    copyBtn.addEventListener('click', () => {
+      // Select the input text
+      copyInput.select();
+      try {
+        // Copy the text to the clipboard
+        document.execCommand('copy');
+        // Show a toast message
+        toastBootstrap.show()
+      } catch (err) {
+        // Show an error message (optional)
+        alert('Failed to copy text to clipboard');
+      }
+      // Deselect the input text
+      copyInput.blur();
+    });
+
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {})
+    }
+  </script>
 {% endblock content_scoring %}

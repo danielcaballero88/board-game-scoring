@@ -1,0 +1,11 @@
+img {
+  height: 100px;
+}
+
+.input-group input {
+  cursor: default;
+}
+
+.add-player-msg {
+  font-size: 0.8rem;
+}
