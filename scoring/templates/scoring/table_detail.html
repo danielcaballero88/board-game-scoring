@@ -41,7 +41,7 @@
             Winner: {{ table.winner }}
           </li>
           <li>
-            Duration (minutes): {{ table.duration }}
+            Status: {{ table.status }}
           </li>
         </ul>
       </div>
@@ -59,7 +59,7 @@
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="card mb-3">
                   <div class="card-header">
-                    {% if winner == username %}
+                    {% if winner.name == username %}
                       <i class="bi bi-trophy"></i>
                     {% endif %}
                     {{ username }} (total: {{ scores_totals|get_item:username }})

@@ -1,10 +1,17 @@
+from __future__ import annotations
+
 import itertools
+from typing import TYPE_CHECKING
 
 from django.contrib.auth import get_user_model
 from django.db import models
 
 from .game import Game
 from .player import Player
+
+if TYPE_CHECKING:
+    from .ot_player import OTPlayer
+    from .score import Score
 
 User = get_user_model()
 
@@ -52,22 +59,36 @@ class Table(models.Model):
     start_date = models.DateField()
     players = models.ManyToManyField(Player, related_name="tables")
 
-    def close(self):
+    def close(self) -> None:
         self.status = "closed"
         self.save()
 
     @property
-    def winner(self):
+    def scores_dict(self) -> dict[Player | OTPlayer, Score]:
+        result = {}
+        for player in itertools.chain(self.players.all(), self.ot_players.all()):
+            player_scores = player.get_scores_by_table(self)
+            result[player] = player_scores
+        return result
+
+    @property
+    def totals_dict(self) -> dict[Player | OTPlayer, int]:
+        totals = {}
+        for player, score in self.scores_dict.items():
+            player_scores = player.get_scores_by_table(self)
+            totals[player] = sum(player_scores.values_list("value", flat=True))
+        return totals
+
+    @property
+    def winner(self) -> Player | OTPlayer | None:
         if self.status != "closed":
             return None
         winner = None
         winner_total_score = -9999
-        for player in itertools.chain(self.players.all(), self.ot_players.all()):
-            player_scores = player.scores.filter(table=self)
-            player_total_score = sum(player_scores.values_list("value", flat=True))
-            if winner is None or player_total_score > winner_total_score:
+        for player, total in self.totals_dict.items():
+            if total > winner_total_score:
                 winner = player
-                winner_total_score = player_total_score
+                winner_total_score = total
         return winner
 
     def clean(self):

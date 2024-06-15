@@ -60,12 +60,21 @@ class Score(models.Model):
             ),
         ]
 
+    @classmethod
+    def get_by_table_and_player(cls, table: Table, player: Player | OTPlayer):
+        if isinstance(player, Player):
+            return cls.objects.filter(table=table, player=player)
+        elif isinstance(player, OTPlayer):
+            return cls.objects.filter(table=table, ot_player=player)
+        else:
+            raise ValueError("player must be either Player or OTPlayer instance.")
+
+    def get_player(self):
+        return self.player or self.ot_player
+
     def clean(self):
         self.validate_game_is_table_game()
         self.validate_player_or_ot_player()
-
-    def get_player_name(self):
-        return self.player.user.username if self.player else self.ot_player.name
 
     def validate_game_is_table_game(self):
         """Check that the scoring category belongs to the same game as the table."""
@@ -83,7 +92,7 @@ class Score(models.Model):
         return (
             f"{self.table.pk} - "
             f"{self.table.game.name} - "
-            f"{self.player.user.username} - "
+            f"{self.get_player().name} - "
             f"{self.scoring_category.name} - "
             f"{self.value}"
         )
