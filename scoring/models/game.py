@@ -1,7 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from .genre import Genre
+
+if TYPE_CHECKING:
+    from .scoring_category import ScoringCategory
+    from .table import Table
 
 
 class Game(models.Model):
@@ -39,6 +47,13 @@ class Game(models.Model):
     description = models.TextField(blank=True)
     genres = models.ManyToManyField(Genre, related_name="games")
     image = models.URLField(blank=True)
+
+    # These type hints are not entirely correct, the right type is
+    # RelatedManager[T] but this type is generated at runtime and is not
+    # available during static type checking. Also, this is good enough
+    # to get good autocomplete for `get`, `filter`, etc.
+    scoring_categories: models.QuerySet[ScoringCategory]
+    tables: models.QuerySet[Table]
 
     def __str__(self):
         return self.name

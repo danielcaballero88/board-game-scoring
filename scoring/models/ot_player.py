@@ -4,9 +4,10 @@ from typing import TYPE_CHECKING
 
 from django.db import models
 
+from .table import Table
+
 if TYPE_CHECKING:
     from .score import Score
-    from .table import Table
 
 
 class OTPlayer(models.Model):
@@ -27,7 +28,7 @@ class OTPlayer(models.Model):
 
     name = models.CharField(max_length=50)
     table = models.ForeignKey(
-        "Table", on_delete=models.CASCADE, related_name="ot_players"
+        Table, on_delete=models.CASCADE, related_name="ot_players"
     )
 
     class Meta:
