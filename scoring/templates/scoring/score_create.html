@@ -1,0 +1,16 @@
+{% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/index.css' %}" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/score_create.css' %}" />
+{% endblock extrahead_scoring %}
+
+{% block content_scoring %}
+  score_create in {{ table_pk }}
+{% endblock content_scoring %}
