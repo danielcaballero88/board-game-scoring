@@ -23,17 +23,14 @@ def get_score_create_form(table: Table):
 
 @login_required(login_url="/accounts/login")
 def score_create(request: HttpRequest, table_pk: int):
-    print("score_create")
     was_validated = ""
 
     table = Table.objects.get(pk=table_pk)
 
     if request.method == "GET":
-        print("GET")
         form = get_score_create_form(table)()
 
     if request.method == "POST":
-        print("POST")
         form = get_score_create_form(table)(request.POST)
         is_valid = form.is_valid()
         was_validated = "was_validated"
