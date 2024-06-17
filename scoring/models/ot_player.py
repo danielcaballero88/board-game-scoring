@@ -48,5 +48,14 @@ class OTPlayer(models.Model):
         """
         return self.scores.all()
 
+    def delete_scores(self, table: Table) -> int:
+        """Delete all scores for this player at a table.
+
+        The table arg is not needed but it's present to mimic the method
+        in Player. Besides deleting the scores, it should also delete
+        the OTPlayer object itself.
+        """
+        return self.scores.all().delete()
+
     def __str__(self):
         return f"{self.name} at {self.table}"

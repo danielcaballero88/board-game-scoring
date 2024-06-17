@@ -58,11 +58,14 @@ class Player(models.Model):
     def get_tables(self) -> list[Table]:
         return self.tables.all()
 
-    def add_fav_game(self, game: Game):
+    def add_fav_game(self, game: Game) -> None:
         self.favorite_games.add(game)
 
-    def remove_fav_game(self, game: Game):
+    def remove_fav_game(self, game: Game) -> None:
         self.favorite_games.remove(game)
+
+    def delete_scores(self, table: Table) -> int:
+        return self.scores.filter(table=table).delete()
 
     def __str__(self):
         return f"{self.user.username}"

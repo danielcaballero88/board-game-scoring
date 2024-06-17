@@ -12,4 +12,9 @@ urlpatterns = [
     path("table/create/<int:game_pk>/", views.table_create, name="table_create"),
     path("table/<int:table_pk>/", views.table_detail, name="table_detail"),
     path("score/create/<int:table_pk>/", views.score_create, name="score_create"),
+    path(
+        "score/delete/<int:table_pk>/<str:playername>/",
+        views.score_delete,
+        name="score_delete",
+    ),
 ]
