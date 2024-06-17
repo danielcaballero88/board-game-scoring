@@ -30,6 +30,7 @@ class OTPlayer(models.Model):
     table = models.ForeignKey(
         Table, on_delete=models.CASCADE, related_name="ot_players"
     )
+    is_ot_player = True
 
     class Meta:
         # Each one-time player should have a unique name in the table.

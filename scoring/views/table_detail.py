@@ -15,15 +15,14 @@ def table_detail(request: HttpRequest, table_pk: int):
     table_scores_parsed = {}
     table_scores_totals = {}
     for player, player_scores in table_scores_dict.items():
-        name = player.name
-        if name not in table_scores_parsed:
-            table_scores_parsed[name] = {}
-            table_scores_totals[name] = 0
+        if player not in table_scores_parsed:
+            table_scores_parsed[player] = {}
+            table_scores_totals[player] = 0
         for score in player_scores:
             sc = score.scoring_category
             value = score.value
-            table_scores_parsed[name][sc] = value
-            table_scores_totals[name] += value
+            table_scores_parsed[player][sc] = value
+            table_scores_totals[player] += value
     # Calculate winner
     context = {
         "table": table,

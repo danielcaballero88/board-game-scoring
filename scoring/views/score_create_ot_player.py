@@ -22,7 +22,7 @@ def get_score_create_form(table: Table):
 
 
 @login_required(login_url="/accounts/login")
-def score_create(request: HttpRequest, table_pk: int):
+def score_create_ot_player(request: HttpRequest, table_pk: int):
     was_validated = ""
 
     table = Table.objects.get(pk=table_pk)
@@ -56,4 +56,4 @@ def score_create(request: HttpRequest, table_pk: int):
             print(form.errors)
 
     context = {"table": table, "form": form, "was_validated": was_validated}
-    return render(request, "scoring/score_create.html", context)
+    return render(request, "scoring/score_create_ot_player.html", context)

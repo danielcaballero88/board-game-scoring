@@ -25,6 +25,7 @@ class Player(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     favorite_games = models.ManyToManyField(Game)
+    is_ot_player = False
 
     @classmethod
     def get_by_username(cls, username: str) -> Player:

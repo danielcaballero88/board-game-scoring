@@ -69,28 +69,30 @@
       <div class="card-body">
         <div class="container">
           <div class="row">
-            {% for username, score in scores.items %}
+            {% for player, score in scores.items %}
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="card mb-3">
                   <div class="card-header d-flex justify-content-between align-items-center">
                     <span>
-                      {% if winner.name == username %}
+                      {% if player == winner %}
                         <i class="bi bi-trophy"></i>
                       {% endif %}
-                      {{ username }} (total: {{ scores_totals|get_item:username }})
+                      {{ player.name }} (total: {{ scores_totals|get_item:player }})
                     </span>
                     {% if table.status == "open" %}
                       <div class="buttons">
                         <div class="btn btn-primary btn-sm">
                           <i class="bi bi-pencil"></i>
                         </div>
-                        <form action="{% url "scoring:score_delete" table.pk username %}"
+                        <form action="{% url "scoring:score_delete" table.pk player.name %}"
                               method="post"
                               class="d-inline-block">
                           {% csrf_token %}
-                          <button type="submit" class="btn btn-danger btn-sm">
-                            <i class="bi bi-trash"></i>
-                          </button>
+                          {% if player.is_ot_player %}
+                            <button type="submit" class="btn btn-danger btn-sm">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          {% endif %}
                         </form>
                       </div>
                     {% endif %}
@@ -114,7 +116,7 @@
                     <span>
                       Add player
                     </span>
-                    <a href="{% url "scoring:score_create" table.pk %}"
+                    <a href="{% url "scoring:score_create_ot_player" table.pk %}"
                        class="btn btn-primary btn-sm">
                       <i class="bi bi-person-plus"></i>
                     </a>

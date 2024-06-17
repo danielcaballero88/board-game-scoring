@@ -105,5 +105,6 @@ class Table(models.Model):
         return (
             f"{self.game.name} - "
             f"{self.start_date} - "
-            f"owner: {self.owner.username}"
+            f"owner: {self.owner.username} - "
+            f"status: {self.status} - "
         )
