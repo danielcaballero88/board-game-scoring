@@ -4,7 +4,19 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from ..models import Table
+from ..models import OTPlayer, Player, Table
+
+
+def get_player_or_ot_player(table: Table, playername: str):
+    player = None
+    try:
+        player = table.players.get(user__username=playername)
+    except Player.DoesNotExist:
+        try:
+            player = table.ot_players.get(name=playername)
+        except OTPlayer.DoesNotExist:
+            raise ValueError(f"Player {playername} not found in table {table}")
+    return player
 
 
 @require_http_methods(["POST"])
@@ -22,13 +34,13 @@ def score_delete(
     """
     table = Table.objects.get(pk=table_pk)
     # The player could be a User or an OTPlayer
-    is_ot_player = False
-    try:
-        player = table.players.get(user__username=playername)
-    except Exception as e:
-        print(e)
-        player = table.ot_players.get(name=playername)
-        is_ot_player = True
+    player = get_player_or_ot_player(table, playername)
+    if not player.is_ot_player and player == table.owner:
+        messages.error(
+            request,
+            f"Cannot delete scores for the owner of the table {table}.",
+        )
+        return HttpResponseRedirect(reverse("scoring:table_detail", args=[table_pk]))
 
     del_records = player.delete_scores(table)
     messages.success(
@@ -36,7 +48,7 @@ def score_delete(
         f"Deleted {del_records} records for {player} at table {table}",
     )
 
-    if is_ot_player:
+    if player.is_ot_player:
         # One-time players are deleted together with their scores.
         player.delete()
         messages.success(request, f"Deleted {player} from the table {table}.")
