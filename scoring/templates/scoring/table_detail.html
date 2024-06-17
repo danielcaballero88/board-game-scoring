@@ -81,9 +81,10 @@
                     </span>
                     {% if table.status == "open" %}
                       <div class="buttons">
-                        <div class="btn btn-primary btn-sm">
+                        <a href="{% url "scoring:score_edit" table.pk player.name %}"
+                           class="btn btn-primary btn-sm">
                           <i class="bi bi-pencil"></i>
-                        </div>
+                        </a>
                         <form action="{% url "scoring:score_delete" table.pk player.name %}"
                               method="post"
                               class="d-inline-block">

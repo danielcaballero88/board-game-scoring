@@ -4,19 +4,7 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from ..models import OTPlayer, Player, Table
-
-
-def get_player_or_ot_player(table: Table, playername: str):
-    player = None
-    try:
-        player = table.players.get(user__username=playername)
-    except Player.DoesNotExist:
-        try:
-            player = table.ot_players.get(name=playername)
-        except OTPlayer.DoesNotExist:
-            raise ValueError(f"Player {playername} not found in table {table}")
-    return player
+from ..models import Table, get_player_or_ot_player
 
 
 @require_http_methods(["POST"])

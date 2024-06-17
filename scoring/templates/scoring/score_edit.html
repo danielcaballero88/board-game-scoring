@@ -1,0 +1,74 @@
+{% extends "scoring/base.html" %}
+
+{% load static %}
+
+{% block extrahead_scoring %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/index.css' %}" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'scoring/css/score_create.css' %}" />
+{% endblock extrahead_scoring %}
+
+{% block content_scoring %}
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="display-6">
+          Edit score for {{ player.name }}
+        </h1>
+        <span class="lead">
+          At table: {{ table }}
+        </span>
+      </div>
+      <div class="card-body">
+        <form action="{% url "scoring:score_edit" table.pk player.name %}"
+              method="post"
+              class="needs-validation {{ was_validated }}"
+              novalidate>
+          {% csrf_token %}
+          {% if player.is_ot_player %}
+            <span class="lead ms-1">Edit the player name:</span>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="name-addon">Player name:</span>
+              <input type="text"
+                     id="{{ form.name.auto_id }}"
+                     name="{{ form.name.name }}"
+                     class="form-control"
+                     aria-label="Name"
+                     aria-describedby="name-addon"
+                     value="{{ form.name.value | default_if_none:'' }}" />
+            </div>
+          {% endif %}
+          <span class="lead ms-1">Edit the player scores:</span>
+          <div class="container-fluid p-0">
+            <div class="row">
+              {% for field in form.visible_fields %}
+                {% if field.name != 'name' %}
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="{{ field.name }}-addon">{{ field.name }}:</span>
+                      <input type="number"
+                             id="{{ field.auto_id }}"
+                             name="{{ field.name }}"
+                             class="form-control"
+                             aria-label="{{ sc }}"
+                             aria-describedby="{{ sc }}-addon"
+                             value="{{ field.value|default_if_none:'' }}" />
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content_scoring %}

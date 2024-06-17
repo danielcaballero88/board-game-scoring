@@ -21,4 +21,9 @@ urlpatterns = [
         views.score_delete,
         name="score_delete",
     ),
+    path(
+        "score/edit/<int:table_pk>/<str:playername>/",
+        views.score_edit,
+        name="score_edit",
+    ),
 ]

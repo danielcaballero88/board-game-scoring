@@ -4,6 +4,7 @@ from .games_list import games_list
 from .index import index
 from .score_create_ot_player import score_create_ot_player
 from .score_delete import score_delete
+from .score_edit import score_edit
 from .table_create import table_create
 from .table_detail import table_detail
 from .tables_list import tables_list
