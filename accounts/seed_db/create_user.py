@@ -20,7 +20,7 @@ def create_user(username: str, email: str, password: str, superuser: bool = Fals
                 password=password,
             )
         else:
-            User.objects.create(
+            User.objects.create_user(
                 username=username,
                 email=email,
                 password=password,
