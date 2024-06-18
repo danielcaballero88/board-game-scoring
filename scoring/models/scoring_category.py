@@ -28,5 +28,9 @@ class ScoringCategory(models.Model):
             )
         ]
 
+    @property
+    def safe_string(self):
+        return self.name.replace(" ", "_").lower()
+
     def __str__(self):
         return self.name
