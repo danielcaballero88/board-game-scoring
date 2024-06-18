@@ -7,6 +7,7 @@
 Here games are "game classes". For instance the game "Agricola" is the game itself, not a particular instance or match being played or having been played.
 
 Relatioinships:
+
 - The main model is, of course, `Game`.
 - A many to many relationship exists with the model `Genre`
 - A one to many relationship exists with the model `ScoringCategory`
@@ -31,4 +32,5 @@ TBD:
 
 - Allow more than one winner for games that end in ties.
   - Note that now winners are calculated on the fly and not a field in Table anymore so it's easier to implement ties, because winner is a propery method in the Table class.
-- There is a bit of code duplication between `score_create_ot_player` and `score_edit`, so it can maybe be improved, but it's not critical either.
+- There is a bit of code duplication between `score_create_ot_player` and `score_edit` (and now also `score_create_self`), so it can maybe be improved, but it's not critical either.
+- When a user follows the link to add self to a table, and then logs in, they are redirected to scoring index (bad ux). Worst than this, even after logging in following the add-self link doesn't display the form for a logged in user.

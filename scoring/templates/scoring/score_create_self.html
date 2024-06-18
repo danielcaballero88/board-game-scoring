@@ -5,7 +5,7 @@
     <div class="card">
       <div class="card-header">
         <h1 class="display-6">
-          Add a new score
+          Add your score
         </h1>
         <span class="lead">
           At table: {{ table }}
@@ -17,27 +17,29 @@
               class="needs-validation {{ was_validated }}"
               novalidate>
           {% csrf_token %}
-          <div class="lead ms-1">
-            Enter your name:
-          </div>
-          <div class="ms-2 text-small">
-            or <a href="{% url "accounts:login" %}">log in</a> for a better experience...
-          </div>
-          <div class="input-group mt-1 mb-3">
-            <span class="input-group-text" id="name-addon">Player name:</span>
-            <input type="text"
-                   id="{{ form.name.auto_id }}"
-                   name="{{ form.name.name }}"
-                   class="form-control"
-                   aria-label="Name"
-                   aria-describedby="name-addon"
-                   value="{{ form.name.value | default_if_none:'' }}" />
-            {% for error in form.name.errors %}
-              <div class="{{ form.name.auto_id }}-feedback invalid-feedback">
-                {{ error }}
-              </div>
-            {% endfor %}
-          </div>
+          {% if request.user.is_anonymous %}
+            <div class="lead ms-1">
+              Enter your name:
+            </div>
+            <div class="ms-2 text-small">
+              or <a href="{% url "accounts:login" %}">log in</a> for a better experience...
+            </div>
+            <div class="input-group mt-1 mb-3">
+              <span class="input-group-text" id="name-addon">Player name:</span>
+              <input type="text"
+                     id="{{ form.name.auto_id }}"
+                     name="{{ form.name.name }}"
+                     class="form-control"
+                     aria-label="Name"
+                     aria-describedby="name-addon"
+                     value="{{ form.name.value | default_if_none:'' }}" />
+              {% for error in form.name.errors %}
+                <div class="{{ form.name.auto_id }}-feedback invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
           <span class="lead ms-1">Enter your scores:</span>
           <div class="container-fluid p-0">
             <div class="row">

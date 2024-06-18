@@ -6,6 +6,9 @@ from .forms import LoginForm
 
 
 def login_view(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect("scoring:index")
+
     was_validated = ""
 
     if request.method == "GET":

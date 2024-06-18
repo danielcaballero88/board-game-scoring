@@ -17,7 +17,10 @@ def score_create_self(request: HttpRequest, table_pk: int):
         form = ScoringForm()
 
     if request.method == "POST":
-        form = ScoringForm(request.POST)
+        updated_post = request.POST.copy()
+        if request.user.is_authenticated:
+            updated_post["name"] = request.user.username
+        form = ScoringForm(updated_post)
         is_valid = form.is_valid()
         was_validated = "was_validated"
         if is_valid:
@@ -25,6 +28,7 @@ def score_create_self(request: HttpRequest, table_pk: int):
             # anonymous users (one-time players).
             if request.user.is_authenticated:
                 player = Player.objects.get(user=request.user)
+                player.tables.add(table)
             else:
                 name = form.cleaned_data["name"]
                 player = OTPlayer.objects.create(name=name, table=table)
@@ -55,7 +59,9 @@ def score_create_self(request: HttpRequest, table_pk: int):
                     {"table": table, "player": player},
                 )
         else:
-            messages.error(request, "There was an error creating the score.")
+            messages.error(
+                request, f"There was an error creating the score. {form.errors}"
+            )
             print(form.errors)
 
     context = {"table": table, "form": form, "was_validated": was_validated}
