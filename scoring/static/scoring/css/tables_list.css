@@ -13,6 +13,10 @@
   font-size: 0.8rem;
 }
 
+.list-group-item .table-status {
+  font-size: 0.6rem;
+}
+
 .list-group-item .players-list {
   font-size: 0.6rem;
 }

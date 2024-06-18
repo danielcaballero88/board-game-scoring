@@ -34,6 +34,7 @@
                     <div class="col d-flex flex-column justify-content-center">
                       <span class="table-game">{{ table.game.name }}</span>
                       <span class="table-date">{{ table.start_date }}</span>
+                      <span class="table-status">({{ table.status }})</span>
                     </div>
                     <div class="col players-list d-flex flex-column justify-content-center">
                       {% for player in table.players.all %}
