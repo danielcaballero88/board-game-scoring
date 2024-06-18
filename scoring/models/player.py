@@ -21,10 +21,19 @@ class Player(models.Model):
         - user (one to one): Auth user object.
         - favorite_games (many to many)
         - tables (many to many)
+        - scores (one to many)
     """
 
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     favorite_games = models.ManyToManyField(Game)
+
+    # Type hints for backward relationships.
+    # (note that the actual type is not QuerySet but it's good enough
+    # for static type checking, the actual type is created dynamically
+    # and so it's not available statically).
+    scores: models.QuerySet[Score]
+
+    # class property useful to distinguish between Player and OTPlayer
     is_ot_player = False
 
     @classmethod

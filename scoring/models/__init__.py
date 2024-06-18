@@ -7,7 +7,7 @@ from .scoring_category import ScoringCategory
 from .table import Table
 
 
-def get_player_or_ot_player(table: Table, playername: str):
+def get_player_or_ot_player(table: Table, playername: str) -> Player | OTPlayer:
     player = None
     try:
         player = table.players.get(user__username=playername)

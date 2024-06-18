@@ -30,6 +30,14 @@ class OTPlayer(models.Model):
     table = models.ForeignKey(
         Table, on_delete=models.CASCADE, related_name="ot_players"
     )
+
+    # Type hints for backward relationships.
+    # (note that the actual type is not QuerySet but it's good enough
+    # for static type checking, the actual type is created dynamically
+    # and so it's not available statically).
+    scores: models.QuerySet[Score]
+
+    # class property useful to distinguish between Player and OTPlayer
     is_ot_player = True
 
     class Meta:

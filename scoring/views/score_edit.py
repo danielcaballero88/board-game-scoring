@@ -22,7 +22,7 @@ def score_edit(request: HttpRequest, table_pk: int, playername: str):
         scores = player.scores.filter(table=table).all()
         initial = {"name": player.name}
         for score in scores:
-            initial[score.scoring_category.name] = score.value
+            initial[score.scoring_category.safe_string] = score.value
         form = ScoringForm(initial=initial)
 
     if request.method == "POST":
@@ -42,7 +42,7 @@ def score_edit(request: HttpRequest, table_pk: int, playername: str):
                 messages.info(request, f"Player name updated to {player.name}")
             # Update scores
             for sc in table.game.scoring_categories.all():
-                value = form.cleaned_data[sc.name]
+                value = form.cleaned_data[sc.safe_string]
                 try:
                     score = player.scores.get(table=table, scoring_category=sc)
                     score.value = value
@@ -55,12 +55,13 @@ def score_edit(request: HttpRequest, table_pk: int, playername: str):
                     messages.error(request, f"Error updating score ({sc}): {exc}")
 
             messages.success(request, "Score updated successfully.")
+            return HttpResponseRedirect(
+                reverse("scoring:table_detail", args=[table.pk])
+            )
         else:
             messages.error(request, "There was an error updating the score.")
             messages.error(request, f"Errors: {form.errors}")
             print(form.errors)
-
-        return HttpResponseRedirect(reverse("scoring:table_detail", args=[table.pk]))
 
     context = {
         "table": table,

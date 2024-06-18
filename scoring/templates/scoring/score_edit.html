@@ -49,6 +49,11 @@
                      aria-label="Name"
                      aria-describedby="name-addon"
                      value="{{ form.name.value | default_if_none:'' }}" />
+              {% for error in form.name.errors %}
+                <div class="{{ form.name.auto_id }}-feedback invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
             </div>
           {% endif %}
           <span class="lead ms-1">Edit the player scores:</span>
@@ -66,6 +71,11 @@
                              aria-label="{{ sc }}"
                              aria-describedby="{{ sc }}-addon"
                              value="{{ field.value|default_if_none:'' }}" />
+                      {% for error in field.errors %}
+                        <div class="{{ field.auto_id }}-feedback invalid-feedback">
+                          {{ error }}
+                        </div>
+                      {% endfor %}
                     </div>
                   </div>
                 {% endif %}
@@ -122,4 +132,21 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // If the form was validated, show the feedback for the errors.
+    document.addEventListener('DOMContentLoaded', function() {
+      const names = ["{{ form.name.auto_id }}"];
+      {% for field in form.visible_fields %}
+        names.push("{{ field.auto_id }}");
+      {% endfor %}
+      names.push("nonfield")
+      names.forEach((name) => {
+        const el = document.querySelector(`.${name}-feedback`);
+        if (el && "{{ was_validated }}" === "was_validated") {
+          el.classList.add('d-block');
+        }
+      })
+    });
+  </script>
 {% endblock content_scoring %}
