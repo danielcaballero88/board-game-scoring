@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Game, Genre, Player, Score, ScoringCategory, Table
+from .models import Game, Genre, OTPlayer, Player, Score, ScoringCategory, Table
 
 
 class ScoringCategoryInLine(admin.TabularInline):
@@ -67,3 +67,9 @@ class PlayerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Player, PlayerAdmin)
+
+
+class OTPlayerAdmin(admin.ModelAdmin): ...
+
+
+admin.site.register(OTPlayer)

@@ -50,3 +50,7 @@ body {
 .fw-700 {
   font-weight: 700;
 }
+
+.text-small {
+  font-size: 0.8em;
+}

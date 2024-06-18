@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content_base %}
+  <div class="container mt-3">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="display-6">
+          Add a new score
+        </h1>
+        <span class="lead">
+          At table: {{ table }}
+        </span>
+      </div>
+      <div class="card-body">
+        <form action="{% url "scoring:score_create_self" table.pk %}"
+              method="post"
+              class="needs-validation {{ was_validated }}"
+              novalidate>
+          {% csrf_token %}
+          <div class="lead ms-1">
+            Enter your name:
+          </div>
+          <div class="ms-2 text-small">
+            or <a href="{% url "accounts:login" %}">log in</a> for a better experience...
+          </div>
+          <div class="input-group mt-1 mb-3">
+            <span class="input-group-text" id="name-addon">Player name:</span>
+            <input type="text"
+                   id="{{ form.name.auto_id }}"
+                   name="{{ form.name.name }}"
+                   class="form-control"
+                   aria-label="Name"
+                   aria-describedby="name-addon"
+                   value="{{ form.name.value | default_if_none:'' }}" />
+            {% for error in form.name.errors %}
+              <div class="{{ form.name.auto_id }}-feedback invalid-feedback">
+                {{ error }}
+              </div>
+            {% endfor %}
+          </div>
+          <span class="lead ms-1">Enter your scores:</span>
+          <div class="container-fluid p-0">
+            <div class="row">
+              {% for field in form.visible_fields %}
+                {% if field.name != 'name' %}
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="{{ field.name }}-addon">{{ field.name }}:</span>
+                      <input type="number"
+                             id="{{ field.auto_id }}"
+                             name="{{ field.name }}"
+                             class="form-control"
+                             aria-label="{{ sc }}"
+                             aria-describedby="{{ sc }}-addon"
+                             value="{{ field.value|default_if_none:'' }}" />
+                      {% for error in field.errors %}
+                        <div class="{{ field.auto_id }}-feedback invalid-feedback">
+                          {{ error }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // If the form was validated, show the feedback for the errors.
+    document.addEventListener('DOMContentLoaded', function() {
+      const names = ["{{ form.name.auto_id }}"];
+      {% for field in form.visible_fields %}
+        names.push("{{ field.auto_id }}");
+      {% endfor %}
+      names.push("nonfield")
+      names.forEach((name) => {
+        const el = document.querySelector(`.${name}-feedback`);
+        if (el && "{{ was_validated }}" === "was_validated") {
+          el.classList.add('d-block');
+        }
+      })
+    });
+  </script>
+{% endblock content_base %}

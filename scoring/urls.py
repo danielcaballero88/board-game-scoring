@@ -26,4 +26,9 @@ urlpatterns = [
         views.score_edit,
         name="score_edit",
     ),
+    path(
+        "score/create-self/<int:table_pk>/",
+        views.score_create_self,
+        name="score_create_self",
+    ),
 ]

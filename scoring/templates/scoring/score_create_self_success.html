@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content_base %}
+  <div class="container mt-3">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="display-6">
+          Score added successfully
+        </h1>
+        <span class="lead">
+          At table: {{ table }}
+        </span>
+      </div>
+      <div class="card-body">
+        <p>
+          The score for player "{{ player.name }}" was added successfully.
+        </p>
+        <a href="{% url "static_pages:landing" %}" class="btn btn-primary">
+          BGS
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock content_base %}

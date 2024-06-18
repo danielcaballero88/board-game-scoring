@@ -3,6 +3,7 @@ from .game_like import game_like
 from .games_list import games_list
 from .index import index
 from .score_create_ot_player import score_create_ot_player
+from .score_create_self import score_create_self
 from .score_delete import score_delete
 from .score_edit import score_edit
 from .table_create import table_create

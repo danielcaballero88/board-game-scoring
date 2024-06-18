@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render
+from django.urls import reverse
 
 from ..models import Table
 
@@ -30,5 +31,8 @@ def table_detail(request: HttpRequest, table_pk: int):
         "scores": table_scores_parsed,
         "scores_totals": table_scores_totals,
         "winner": table.winner,
+        "join_url": request.build_absolute_uri(
+            reverse("scoring:score_create_self", args=[table.pk])
+        ),
     }
     return render(request, "scoring/table_detail.html", context)
