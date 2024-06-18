@@ -15,9 +15,19 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <h1 class="display-6">
-          Edit score for {{ player.name }}
-        </h1>
+        <div class="d-flex justify-content-between align-items-start">
+          <h1 class="display-6">
+            Edit score for {{ player.name }}
+          </h1>
+          {% if player.user != table.owner %}
+            <button type="submit"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteScoresModal">
+              <i class="bi bi-trash"></i>
+            </button>
+          {% endif %}
+        </div>
         <span class="lead">
           At table: {{ table }}
         </span>
@@ -68,6 +78,47 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade"
+       id="deleteScoresModal"
+       tabindex="-1"
+       aria-labelledby="deleteScoresModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteScoresModalLabel">
+            Delete scores
+          </h1>
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete the scores for player "{{ player.name }}"?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Go back
+          </button>
+          <a href="{% url "accounts:logout" %}">
+            <form action="{% url "scoring:score_delete" table.pk player.name %}"
+                  method="post"
+                  class="d-inline-block">
+              {% csrf_token %}
+              {% if player.user != table.owner %}
+                <button type="submit" class="btn btn-danger">
+                  Delete
+                </button>
+              {% endif %}
+            </form>
+          </a>
+        </div>
       </div>
     </div>
   </div>

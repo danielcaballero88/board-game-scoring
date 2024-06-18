@@ -82,19 +82,9 @@
                     {% if table.status == "open" %}
                       <div class="buttons">
                         <a href="{% url "scoring:score_edit" table.pk player.name %}"
-                           class="btn btn-primary btn-sm">
+                           class="btn btn-primary">
                           <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{% url "scoring:score_delete" table.pk player.name %}"
-                              method="post"
-                              class="d-inline-block">
-                          {% csrf_token %}
-                          {% if player.user != table.owner %}
-                            <button type="submit" class="btn btn-danger btn-sm">
-                              <i class="bi bi-trash"></i>
-                            </button>
-                          {% endif %}
-                        </form>
                       </div>
                     {% endif %}
                   </div>
@@ -118,7 +108,7 @@
                       Add player
                     </span>
                     <a href="{% url "scoring:score_create_ot_player" table.pk %}"
-                       class="btn btn-primary btn-sm">
+                       class="btn btn-primary">
                       <i class="bi bi-person-plus"></i>
                     </a>
                   </div>
