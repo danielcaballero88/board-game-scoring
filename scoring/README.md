@@ -28,7 +28,7 @@ This is an instance of a game being played or having been played.
   - The score model is `Score` which represents a score for a single player, at a single table, for a single scoring category. Besides these relationships it has a single integer field: `value`.
 
 TBD:
-- Allow non-registered players so a user can create a table and send a link to friends and they can input their scores without the need to create an account.
-  - A new model `OneTimePlayer` could be created, with a nickname alone would be enough.
-  - A one to many relationship is needed only (one `Table` many `OneTimePlayer`) because these one time players would be only players for one specific table.
+
 - Allow more than one winner for games that end in ties.
+  - Note that now winners are calculated on the fly and not a field in Table anymore so it's easier to implement ties, because winner is a propery method in the Table class.
+- There is a bit of code duplication between `score_create_ot_player` and `score_edit`, so it can maybe be improved, but it's not critical either.
