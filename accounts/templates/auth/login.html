@@ -60,6 +60,7 @@
                   Remember me
                 </label>
               </div>
+              {{ form.non_field_errors }}
               {% for error in form.non_field_errors %}
                 <div class="mb-3 nonfield-feedback invalid-feedback">
                   {{ error }}

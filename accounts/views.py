@@ -24,10 +24,10 @@ def login_view(request: HttpRequest):
             if user is not None:
                 # A backend authenticated the credentials
                 login(request, user)
+                return redirect("scoring:index")
             else:
                 # No backend authenticated the credentials
                 form.add_error(None, "Wrong credentials")
-            return redirect("scoring:index")
 
     return render(
         request, "auth/login.html", {"form": form, "was_validated": was_validated}
