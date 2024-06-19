@@ -59,6 +59,11 @@ class Table(models.Model):
     start_date = models.DateField()
     players = models.ManyToManyField(Player, related_name="tables")
 
+    # One-time players (backwards relation). The type is not entirely
+    # correct because the actual type is `RelatedManager` but that is
+    # set during runtime. This is good enough for type checking.
+    ot_players: models.QuerySet[OTPlayer]
+
     def close(self) -> None:
         self.status = "closed"
         self.save()
