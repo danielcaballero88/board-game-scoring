@@ -11,6 +11,8 @@ urlpatterns = [
     path("tables/list/", views.tables_list, name="tables_list"),
     path("table/create/<int:game_pk>/", views.table_create, name="table_create"),
     path("table/<int:table_pk>/", views.table_detail, name="table_detail"),
+    path("table/close/<int:table_pk>/", views.table_close, name="table_close"),
+    path("table/reopen/<int:table_pk>/", views.table_reopen, name="table_reopen"),
     path(
         "score/create/<int:table_pk>/",
         views.score_create_ot_player,

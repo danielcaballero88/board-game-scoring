@@ -44,19 +44,40 @@
             Status: {{ table.status }}
           </li>
         </ul>
-        {% if table.status == "open" and request.user == table.owner %}
-          Invite players:
-          <div class="input-group">
-            <input type="text"
-                   class="form-control"
-                   id="copyInput"
-                   value="{{ join_url }}"
-                   readonly
-                   onmousedown="return false;" />
-            <button class="btn btn-primary" type="button" id="copyBtn">
-              Copy
-            </button>
+        {% if table.status == "open" %}
+          <span>Invite players:</span>
+          <div class="row">
+            <div class="col-10">
+              <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       id="copyInput"
+                       value="{{ join_url }}"
+                       readonly
+                       onmousedown="return false;" />
+                <button class="btn btn-primary" type="button" id="copyBtn">
+                  Copy
+                </button>
+              </div>
+            </div>
+            <div class="col-2">
+              <form action="{% url "scoring:table_close" table.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger w-100">
+                  Close table
+                </button>
+              </form>
+            </div>
           </div>
+        {% endif %}
+        {% if table.status == "closed" %}
+          <span>Reopen table to invite new players:</span>
+          <form action="{% url "scoring:table_reopen" table.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">
+              Reopen table
+            </button>
+          </form>
         {% endif %}
       </div>
     </div>

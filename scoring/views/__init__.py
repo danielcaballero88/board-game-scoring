@@ -6,6 +6,8 @@ from .score_create_ot_player import score_create_ot_player
 from .score_create_self import score_create_self
 from .score_delete import score_delete
 from .score_edit import score_edit
+from .table_close import table_close
 from .table_create import table_create
 from .table_detail import table_detail
+from .table_reopen import table_reopen
 from .tables_list import tables_list

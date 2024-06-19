@@ -68,6 +68,10 @@ class Table(models.Model):
         self.status = "closed"
         self.save()
 
+    def open(self) -> None:
+        self.status = "open"
+        self.save()
+
     @property
     def scores_dict(self) -> dict[Player | OTPlayer, Score]:
         result = {}
