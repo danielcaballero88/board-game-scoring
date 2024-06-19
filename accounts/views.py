@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from .forms import LoginForm
 
@@ -12,9 +13,14 @@ def login_view(request: HttpRequest):
     was_validated = ""
 
     if request.method == "GET":
+        if "next" in request.GET:
+            request.session["next"] = request.GET["next"]
+        else:
+            request.session["next"] = reverse("scoring:index")
         form = LoginForm()
 
     if request.method == "POST":
+        next = request.session.get("next", reverse("scoring:index"))
         form = LoginForm(request.POST)
         is_valid = form.is_valid()
         was_validated = "was_validated"
@@ -27,7 +33,7 @@ def login_view(request: HttpRequest):
             if user is not None:
                 # A backend authenticated the credentials
                 login(request, user)
-                return redirect("scoring:index")
+                return HttpResponseRedirect(next)
             else:
                 # No backend authenticated the credentials
                 form.add_error(None, "Wrong credentials")

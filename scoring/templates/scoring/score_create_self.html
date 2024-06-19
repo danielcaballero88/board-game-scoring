@@ -22,7 +22,7 @@
               Enter your name:
             </div>
             <div class="ms-2 text-small">
-              or <a href="{% url "accounts:login" %}">log in</a> for a better experience...
+              or <a href="{% url "accounts:login" %}?next={{ request.path }}">log in</a> for a better experience...
             </div>
             <div class="input-group mt-1 mb-3">
               <span class="input-group-text" id="name-addon">Player name:</span>
