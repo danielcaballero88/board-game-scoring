@@ -14,6 +14,16 @@ def score_create_self(request: HttpRequest, table_pk: int):
     ScoringForm = get_scoring_form(table)
 
     if request.method == "GET":
+        # If the user is authenticated and they are already a player in
+        # the table, redirect them to the table detail page.
+        if (
+            request.user.is_authenticated
+            and Player.objects.filter(user=request.user, tables=table).exists()
+        ):
+            return HttpResponseRedirect(
+                reverse("scoring:table_detail", args=[table.pk])
+            )
+        # Create empty form
         form = ScoringForm()
 
     if request.method == "POST":
