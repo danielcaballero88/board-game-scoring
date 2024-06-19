@@ -113,7 +113,7 @@
                       </div>
                     {% endif %}
                   </div>
-                  <div class="card-body">
+                  <div class="card-body scoring-card">
                     <ul>
                       {% for category, value in score.items %}
                         <li>
@@ -194,5 +194,16 @@
     if (copyBtn) {
       copyBtn.addEventListener('click', () => {})
     }
+  </script>
+
+  <script>
+    const scrollableDivs = document.querySelectorAll('.scoring-card');
+
+    scrollableDivs.forEach(div => {
+      const content = div.querySelector('ul');
+      if (content.scrollHeight > div.clientHeight) {
+        div.classList.add('scrollable-card');
+      }
+    });
   </script>
 {% endblock content_scoring %}

@@ -9,3 +9,30 @@ img {
 .add-player-msg {
   font-size: 0.8rem;
 }
+
+.scoring-card {
+  max-height: 200px;
+  overflow-y: hidden;
+}
+
+.scrollable-card {
+  overflow-y: scroll;
+}
+
+/* Style the scrollbar */
+.scrollable-card::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* .scrollable-card::-webkit-scrollbar-track {
+  background: #f1f1f1;
+} */
+
+.scrollable-card::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-color), 1);
+  border-radius: 99px;
+}
+
+/* .scrollable-card::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} */
