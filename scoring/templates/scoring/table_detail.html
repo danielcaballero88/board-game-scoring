@@ -13,19 +13,21 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <div class="row">
-          <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-            <img class="m-0"
-                 src="{{ table.game.image }}"
-                 alt="Game image for {{ table.game.name }}" />
-          </div>
-          <div class="col-10">
-            <h1>
-              {{ table.game.name }}
-            </h1>
-            <p>
-              {{ table.start_date }}
-            </p>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-3 d-flex flex-column justify-content-center align-items-center">
+              <img class="m-0"
+                   src="{{ table.game.image }}"
+                   alt="Game image for {{ table.game.name }}" />
+            </div>
+            <div class="col-9">
+              <h1>
+                {{ table.game.name }}
+              </h1>
+              <p>
+                {{ table.start_date }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -44,10 +46,10 @@
             Status: {{ table.status }}
           </li>
         </ul>
-        {% if table.status == "open" %}
+        {% if table.status == "open" and request.user == table.owner %}
           <span>Invite players:</span>
           <div class="row">
-            <div class="col-10">
+            <div class="col-12 col-md-8">
               <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -56,11 +58,13 @@
                        readonly
                        onmousedown="return false;" />
                 <button class="btn btn-primary" type="button" id="copyBtn">
-                  Copy
+                  Copy URL
                 </button>
               </div>
             </div>
-            <div class="col-2">
+            <div class="col d-md-none">
+            </div>
+            <div class="col-auto col-md-4 mt-2 mt-md-0">
               <form action="{% url "scoring:table_close" table.pk %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger w-100">
@@ -70,7 +74,7 @@
             </div>
           </div>
         {% endif %}
-        {% if table.status == "closed" %}
+        {% if table.status == "closed" and request.user == table.owner %}
           <span>Reopen table to invite new players:</span>
           <form action="{% url "scoring:table_reopen" table.pk %}" method="post">
             {% csrf_token %}
