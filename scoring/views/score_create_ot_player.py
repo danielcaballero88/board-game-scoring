@@ -26,7 +26,8 @@ def score_create_ot_player(request: HttpRequest, table_pk: int):
             # Create score
             name = form.cleaned_data["name"]
             # I only admit one-time players for manually created scores
-            # (for now).
+            # (for now). Registered players can add scores themselves
+            # when given the link to self-add scores.
             # TODO: admit adding scores for registered players too.
             ot_player = OTPlayer.objects.create(name=name, table=table)
             for sc in table.game.scoring_categories.all():

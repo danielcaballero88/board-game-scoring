@@ -22,7 +22,7 @@ class Table(models.Model):
     A table can be created by a user and they can then share a link with
     other users and also with non-users. Users will be added as
     `players` and non-users as `ot_players`.
-    TODO: maybe I can unify players by automatically registering
+    IDEA: maybe I can unify players by automatically registering
     non-users with the username they provide. Not sure if it's the best
     approach because it requires that the username be unique, so it may
     take longer for one-time players to enter a score, which would be

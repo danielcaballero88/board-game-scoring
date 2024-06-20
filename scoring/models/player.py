@@ -59,6 +59,7 @@ class Player(models.Model):
         # So I need to implement a relation manually by storing two
         # values, one for the type of player and one for the id.
         # Doable but I don't want to spend time on it now.
+        # ... Or I can use SQL directly.
         tables_won_count = 0
         for table in tables_game:
             if table.winner == self:
