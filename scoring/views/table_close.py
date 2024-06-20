@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 from django.http import HttpRequest, HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from ..models import Table
+from ..utils import send_email_async
 
 
 @require_http_methods(["POST"])
@@ -16,11 +16,10 @@ def table_close(request: HttpRequest, table_pk: int):
         return HttpResponseForbidden()
 
     table.close()
-    send_mail(
+    send_email_async(
         subject="Table closed",
         message=f"Your table {table} has been closed.",
         from_email="dancab.messenger.bot@gmail.com",
         recipient_list=["danielcaballero88@gmail.com"],
-        fail_silently=False,
     )
     return HttpResponseRedirect(reverse("scoring:table_detail", args=[table_pk]))
