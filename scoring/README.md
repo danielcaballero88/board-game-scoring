@@ -28,10 +28,9 @@ This is an instance of a game being played or having been played.
 - It has a `scores` which is a list of scores.
   - The score model is `Score` which represents a score for a single player, at a single table, for a single scoring category. Besides these relationships it has a single integer field: `value`.
 
-TBD:
+TODO:
 
 - Allow more than one winner for games that end in ties.
   - Note that now winners are calculated on the fly and not a field in Table anymore so it's easier to implement ties, because winner is a propery method in the Table class.
 - There is a bit of code duplication between `score_create_ot_player` and `score_edit` (and now also `score_create_self`), so it can maybe be improved, but it's not critical either.
-- When a user follows the link to add self to a table, and then logs in, they are redirected to scoring index (bad ux). Worst than this, even after logging in following the add-self link doesn't display the form for a logged in user.
 - Add custom 403 page that allows the user to go back to their previous page, similar for 404 and others maybe? Maybe a general error page and some specific error pages.
