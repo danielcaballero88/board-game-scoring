@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content_base %}
+  <div class="container mt-3">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="display-6">
+          This table has been closed by the owner
+        </h1>
+        <span class="lead">
+          Table: {{ table }}
+        </span>
+      </div>
+      <div class="card-body">
+        <p>
+          The owner has closed the table for new scores, ask them to reopen it if you want to add your score, or they can add it for you.
+        </p>
+        <a href="{% url "static_pages:landing" %}" class="btn btn-primary">
+          BGS
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock content_base %}

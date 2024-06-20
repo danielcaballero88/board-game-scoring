@@ -23,8 +23,10 @@ def score_create_self(request: HttpRequest, table_pk: int):
             return HttpResponseRedirect(
                 reverse("scoring:table_detail", args=[table.pk])
             )
-        # TODO: if the table is closed, show a view saying that the
-        # table is closed.
+        if table.status == "closed":
+            return render(
+                request, "scoring/score_create_self_table_closed.html", {"table": table}
+            )
         # Create empty form
         form = ScoringForm()
 
