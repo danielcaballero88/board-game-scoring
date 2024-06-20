@@ -69,7 +69,4 @@ class PlayerAdmin(admin.ModelAdmin):
 admin.site.register(Player, PlayerAdmin)
 
 
-class OTPlayerAdmin(admin.ModelAdmin): ...
-
-
 admin.site.register(OTPlayer)

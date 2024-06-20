@@ -36,7 +36,6 @@ $ python manage.py runserver $PORT_NUMBER
 
 where `$PORT_NUMBER` is optional and the default is `8000`.
 
-
 ## Linters and formatters (and pre-commit hooks)
 
 For the python code the linters in use are:
